@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { MThemeProvider } from "@getcortexlabs/mavis-web";
 import { lumeNightTheme } from "../../../app/theme";
+import { useAccessibleTheme } from "../../preferences/composables/useAccessibleTheme";
+const accessibleNightTheme = useAccessibleTheme(lumeNightTheme);
 import { useClientReady } from "../../../shared/composables/useClientReady";
 const clientReady = useClientReady();
 import { textStyle, flowStyle } from "../../../shared/ui/mavis-styles";
@@ -41,7 +43,7 @@ const active = computed(() =>
 </script>
 
 <template>
-  <MThemeProvider :theme="lumeNightTheme" appearance="dark">
+  <MThemeProvider :theme="accessibleNightTheme" appearance="dark">
     <MBox
       class="light-network"
       :data-city="selected"

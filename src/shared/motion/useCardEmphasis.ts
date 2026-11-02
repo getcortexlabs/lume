@@ -4,8 +4,11 @@ import {
   type MotionSurface,
 } from "@getcortexlabs/mavis-core/experimental";
 
+import { usePreferences } from "../../modules/preferences/composables/usePreferences";
+
 /** Hover and keyboard focus share one presentation with Mavis press feedback. */
 export function useCardEmphasis() {
+  const { reduced } = usePreferences();
   const surface = markRaw(createMotionSurface());
   const hovered = ref(false),
     focused = ref(false);
@@ -17,12 +20,12 @@ export function useCardEmphasis() {
       motion = undefined;
     };
   });
-  watch(active, (value) =>
+  watch([active, reduced], ([value, disabled]) =>
     motion?.animate(
-      { y: value ? -4 : 0 },
+      { y: value && !disabled ? -4 : 0 },
       {
         type: "tween",
-        duration: 220,
+        duration: disabled ? 0 : 220,
         ease: "easeOut",
       },
     ),

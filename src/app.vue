@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { usePreferencesPresentation } from "./modules/preferences/composables/usePreferencesPresentation";
+usePreferencesPresentation();
 import { useContentTransition } from "./shared/motion/useContentTransition";
 const pageTransition = useContentTransition();
 import { useHead, useRoute } from "#app";

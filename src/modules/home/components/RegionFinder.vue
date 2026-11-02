@@ -4,10 +4,19 @@ const clientReady = useClientReady();
 import AppSelect from "../../../shared/ui/AppSelect.vue";
 import { textStyle } from "../../../shared/ui/mavis-styles";
 import { cityOptions } from "../../cases/presentation/choices";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { MButton, MIcon, MText } from "@getcortexlabs/mavis-web";
-const city = ref("");
+import { usePreferences } from "../../preferences/composables/usePreferences";
+const preferences = usePreferences();
+const city = ref(preferences.state.value.region);
+const touched = ref(false);
+watch(
+  () => preferences.state.value.region,
+  (value) => {
+    if (!touched.value) city.value = value;
+  },
+);
 const router = useRouter();
 function explore() {
   router.push({
@@ -37,6 +46,7 @@ function explore() {
         id="home-city"
         label="Escolha sua cidade"
         v-model="city"
+        @change="touched = true"
         :options="cityOptions"
       /><MButton
         :disabled="!clientReady"

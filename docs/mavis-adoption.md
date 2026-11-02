@@ -4,7 +4,7 @@ Reviewed on November 2, 2026. Mavis Web/Core **0.1.0-alpha.6** and Jolt **0.1.0-
 
 ## Current usage
 
-The audit reports **27 Mavis component types, 624 static occurrences, and no custom native HTML controls**. This count is not a percentage of code or visual authorship: extracting the three participation options into a reusable composition reduces static occurrences while expanding component reuse.
+The audit reports **27 Mavis component types, 665 static occurrences, and no custom native HTML controls** across 89 Vue components. This count is not a percentage of code or visual authorship: extracting a reusable composition can reduce static occurrences while expanding component reuse.
 
 ## What alpha.6 replaced
 
@@ -52,6 +52,8 @@ useKindnessMotion applies viewportEnter to the two statement lines and scrollLin
 **Data and navigation:** AppDateInput converts domain strings to CivilDate/null and distinguishes valid search input from drafts. AppSelect adapts the selection contract. RouterLink still owns destinations, history, and query parameters; Mavis renders the new links. There is no need to replace the router.
 
 **Action-specific focus:** the detail page still prepares focus for its dialog triggers. The built-in calendar fix does not eliminate this composition from every application dialog.
+
+**Preferences and recovery:** saved searches, persistence, preferred region, and error recovery are application behavior. Their controls use Mavis. `useAccessibleTheme` derives typography, contrast, and motion tokens for the root and dark surfaces. `useLumeWebMotion` cancels application choreography through a child scope when motion is reduced, without reconfiguring Mavis' borrowed runtime. Entrance directives and content transitions configure their own Jolt runtimes. Editorial CSS handles text outside Mavis tokens and gives mobile notices one column with larger text. Pagination is constrained to its container so Mavis' wrapping row remains usable with enlarged labels.
 
 ## Updated upstream opportunities
 

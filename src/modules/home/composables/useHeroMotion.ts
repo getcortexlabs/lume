@@ -1,11 +1,11 @@
 import { markRaw } from "vue";
 import { createMotionRegion } from "@getcortexlabs/mavis-core/experimental";
-import { useMavisWebMotion } from "@getcortexlabs/mavis-web/experimental";
+import { useLumeWebMotion } from "../../../shared/motion/useLumeWebMotion";
 
 /** The opening is finite; all copy is readable in SSR and remains interactive. */
 export function useHeroMotion() {
   const region = markRaw(createMotionRegion());
-  useMavisWebMotion(region, (scope, element) => {
+  useLumeWebMotion(region, (scope, element) => {
     const beats = [
       ...element.querySelectorAll<HTMLElement>("[data-hero-beat]"),
     ];

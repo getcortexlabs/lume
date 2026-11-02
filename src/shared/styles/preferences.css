@@ -1,0 +1,79 @@
+/* Editorial overrides complement the Mavis theme for non-tokenized reading text. */
+html[data-text-size="large"]
+  :is(
+    p,
+    label,
+    input,
+    textarea,
+    small,
+    .case-date,
+    .case-location,
+    .m-button,
+    .m-link,
+    .m-select-trigger
+  ) {
+  font-size: max(1em, 16px) !important;
+  line-height: 1.6 !important;
+}
+html[data-text-size="large"] .hero-description p {
+  font-size: 18px !important;
+}
+html[data-text-size="large"] :is(.case-date, .case-location) {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 760px) {
+  html[data-text-size="large"] .case-grid {
+    grid-template-columns: 1fr;
+  }
+}
+html[data-text-size="large"] .site-header {
+  flex-wrap: wrap;
+  gap: 16px;
+}
+html[data-text-size="large"] .region-bar {
+  flex-wrap: wrap;
+}
+html[data-text-size="large"] .region-bar form {
+  flex-wrap: wrap;
+}
+html[data-contrast="high"] .app-shell {
+  --accessibility-ink: #10271b;
+  --muted: #263b2b;
+  --line: #526047;
+}
+html[data-contrast="high"]
+  :is(
+    p,
+    small,
+    .case-date,
+    .case-location,
+    .eyebrow,
+    .region-kicker,
+    .disclosure
+  ) {
+  color: var(--accessibility-ink, #10271b) !important;
+  --copy-color: var(--accessibility-ink, #10271b) !important;
+}
+html[data-contrast="high"] :is(.light-network, .mission-section) {
+  --accessibility-ink: #ffffff;
+}
+html[data-contrast="high"]
+  :is(.case-card, .care-card, .region-bar, .m-input-editor, .m-select-trigger) {
+  border-color: #526047 !important;
+}
+html[data-contrast="high"] :is(a, button, input, textarea):focus-visible {
+  outline: 3px solid #12663c;
+  outline-offset: 4px;
+}
+html[data-contrast="high"]
+  :is(.light-network, .mission-section)
+  :is(a, button):focus-visible {
+  outline-color: #e1ffa0;
+}
+html[data-reduced-motion="true"] *,
+html[data-reduced-motion="true"] *::before,
+html[data-reduced-motion="true"] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}

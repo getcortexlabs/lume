@@ -13,6 +13,7 @@ import BrandLogo from "./BrandLogo.vue";
       <RouterLink to="/cases">Encontrar avisos</RouterLink
       ><RouterLink to="/guidance">Orientação e cuidado</RouterLink
       ><RouterLink to="/network">Faça parte da rede</RouterLink>
+      <RouterLink to="/preferences">Preferências e acessibilidade</RouterLink>
     </MColumn>
     <MColumn class="footer-note" data-mavis-flow :style="flowStyle('column')">
       <MText

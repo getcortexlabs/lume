@@ -1,4 +1,13 @@
 <script setup lang="ts">
+import { showError } from "#app";
+function testErrorPage() {
+  // A deliberate, handled error exercises recovery without Nuxt's development overlay.
+  showError({
+    statusCode: 400,
+    statusMessage: "Simulated application failure",
+    fatal: true,
+  });
+}
 import HttpTracePanel from "../components/HttpTracePanel.vue";
 import {
   MColumn,
@@ -65,6 +74,18 @@ const { state, latency, message, apply } = useSimulation();
       <RouterLink to="/organization" class="text-link"
         >Experimentar revisão →</RouterLink
       >
+    </MColumn>
+    <MColumn gap="sm" :style="{ marginBlock: '32px' }">
+      <MText as="h2" variant="heading">Recuperação de página</MText>
+      <MText as="p"
+        >Abra a página de erro para testar a recuperação. Rascunhos já salvos
+        são preservados.</MText
+      >
+      <MButton
+        text="Testar página de erro"
+        variant="secondary"
+        @click="testErrorPage"
+      />
     </MColumn>
     <HttpTracePanel />
   </section>

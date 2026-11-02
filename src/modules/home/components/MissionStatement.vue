@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { MThemeProvider } from "@getcortexlabs/mavis-web";
 import { lumeNightTheme } from "../../../app/theme";
+import { useAccessibleTheme } from "../../preferences/composables/useAccessibleTheme";
+const accessibleNightTheme = useAccessibleTheme(lumeNightTheme);
 import { MBox, MIcon, MLink, MText } from "@getcortexlabs/mavis-web";
 import { textStyle } from "../../../shared/ui/mavis-styles";
 import { useKindnessMotion } from "../composables/useKindnessMotion";
 const region = useKindnessMotion();
 </script>
 <template>
-  <MThemeProvider :theme="lumeNightTheme" appearance="dark">
+  <MThemeProvider :theme="accessibleNightTheme" appearance="dark">
     <section class="mission-section" aria-labelledby="kindness-title">
       <MBox :motion-region="region" :style="{ display: 'block' }">
         <div class="wrap">

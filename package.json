@@ -8,7 +8,7 @@
     "build": "nuxt typecheck && nuxt build",
     "preview": "nuxt preview --host 127.0.0.1 --port 4188",
     "test": "npm run test:domain",
-    "test:domain": "node scripts/test-domain.mjs && node scripts/test-workflows.mjs && node scripts/test-operations.mjs && node scripts/test-pilot.mjs",
+    "test:domain": "node scripts/test-domain.mjs && node scripts/test-workflows.mjs && node scripts/test-operations.mjs && node scripts/test-pilot.mjs && node scripts/test-preferences.mjs",
     "test:e2e": "playwright test",
     "test:render": "node scripts/check-render.mjs",
     "audit:ui": "node scripts/audit-mavis.mjs",

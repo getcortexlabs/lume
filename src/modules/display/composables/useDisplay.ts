@@ -1,3 +1,4 @@
+import { usePreferences } from "../../preferences/composables/usePreferences";
 import {
   computed,
   onMounted,
@@ -11,6 +12,7 @@ import { useServices } from "../../../app/services";
 import type { PublicCase } from "../../cases/domain/case";
 import { displaySettings, DISPLAY_TTL_MS, leaseValid } from "../domain/display";
 export function useDisplay() {
+  const preferences = usePreferences();
   const { cases, workspace } = useServices(),
     route = useRoute();
   const settings = computed(() => displaySettings(route.query));
@@ -23,6 +25,9 @@ export function useDisplay() {
     now = ref(0),
     loading = ref(false),
     testing = ref(false);
+  watch(preferences.reduced, (value) => {
+    if (value) paused.value = true;
+  });
   let generation = 0,
     timer: ReturnType<typeof setInterval> | undefined,
     lastAdvance = 0,
@@ -116,9 +121,9 @@ export function useDisplay() {
     alive = true;
     now.value = Date.now();
     offline.value = !navigator.onLine;
-    paused.value = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    paused.value =
+      preferences.reduced.value ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     applySettings();
     unsubscribe = cases.subscribe(() => {
       if (!offline.value) void refresh();

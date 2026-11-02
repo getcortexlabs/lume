@@ -18,6 +18,7 @@ import {
 } from "@getcortexlabs/mavis-web";
 import CasePeriodFilters from "../components/CasePeriodFilters.vue";
 import CaseFilters from "../components/CaseFilters.vue";
+import SavedSearches from "../components/SavedSearches.vue";
 import CaseCard from "../components/CaseCard.vue";
 import { usePublicResults } from "../composables/usePublicResults";
 const {
@@ -82,6 +83,7 @@ const resultsRegion = useListLayout(grid, records);
       v-model:from="from"
       v-model:to="to"
     />
+    <SavedSearches v-model:city="city" />
     <ActiveCaseFilters :filters="activeFilters" @remove="removeFilter" />
     <CaseResultsToolbar
       v-model="order"

@@ -1,6 +1,6 @@
 # Lume
 
-A web frontend supporting the search for missing people. Built with Nuxt 4, Vue 3, TypeScript, Vue Router, and Mavis Web. All workflows use fictional examples. Drafts persist in browser storage; other state remains in memory.
+A web frontend supporting the search for missing people. Built with Nuxt 4, Vue 3, TypeScript, Vue Router, and Mavis Web. All workflows use fictional examples. Drafts, saved searches, and preferences persist in browser storage; other state remains in memory.
 
 ## Language conventions
 
@@ -40,6 +40,7 @@ Routes use English: `/cases`, `/cases/:id`, `/guidance`, `/network`, and `/organ
 | `/cases/:id` | Public snapshot, source, review information, sharing, and return to search |
 | `/guidance` | Initial guidance and an official reference |
 | `/network` | Regional widget and display previews with notice navigation |
+| `/preferences` | Preferred region, larger text, stronger contrast, and reduced motion |
 | `/organization` | Review queue, evidence, simulated AI assistance, decisions, and history |
 | `/organization/cases/new` | Four-step intake, validation, simulated authorization, and public preview |
 | `/organization/drafts` | Drafts persisted in this browser |
@@ -50,6 +51,16 @@ Routes use English: `/cases`, `/cases/:id`, `/guidance`, `/network`, and `/organ
 To demonstrate the full cycle, create a fictional person, save and resume the draft, submit it for review, approve publication, and open the public notice. Revalidate the publication to produce a new revision or withdraw it. In the network panel, connect a partner for the relevant city to follow revisions. Disconnect the partner before withdrawal to observe pending removal and expiration. The simulation hides expired content; reconnecting fetches the current state and does not restore a withdrawn notice.
 
 Search distinguishes disappearance dates from review dates, includes pagination, and preserves context while navigating between notices. A withdrawn publication shows a message without personal data. Unknown or private records remain unavailable.
+
+## Personal preferences and error recovery
+
+Open `/preferences` from the header or footer to choose a region, larger text, stronger contrast, or reduced motion. Preferences apply without reloading and synchronize between tabs on the same origin. The selected region prefills the homepage and provides an explicit shortcut in search; it never replaces filters from an incoming link. Device-level reduced motion always takes precedence. Rotation starts paused when motion is reduced, and can be started explicitly.
+
+At `/cases`, save up to ten named combinations of public filters. Opening one queries the current mock repository again from page one; no notice snapshots or private URL fields are stored. Duplicate filter combinations are rejected, and each saved search can be removed. These choices are local to this browser, without accounts or cross-device synchronization. Clearing browser data removes them. Unreadable storage is preserved until an explicit change; unavailable storage falls back to session-only state with visible feedback.
+
+The global Nuxt error page offers retry and a return home without displaying internal error messages. Saved drafts survive recovery; unsaved changes are not guaranteed. Use **Testar página de erro** at `/organization/simulation` to exercise the full recovery flow. This deliberate handled error avoids Nuxt's developer overlay; actual unexpected failures still retain normal development diagnostics.
+
+The preference store is created per Nuxt application/request and reads browser storage after hydration. Mavis theme overrides supply control typography, contrast, and motion tokens. Jolt owns animation playback and disposal; Lume connects the local preference to those contracts. Editorial CSS complements the theme for custom reading text and responsive layouts.
 
 In the review queue, Antônio Lima has a fictional conflict between sources. Correct the field or accept an evidence-backed suggestion before publishing. Possible duplicates are suggested using names or municipalities, similar ages, and nearby dates; records are never merged automatically. New submissions start with manual review.
 
@@ -186,11 +197,11 @@ Orbit's automatic build detects the `nuxt` dependency, uses Node 22, and runs th
 
 A push only triggers automatic deployment after the application is connected to the repository and that behavior is configured in Orbit. Publishing code to GitHub does not confirm that the service or domain is live.
 
-To serve the SSR build locally, run `HOST=0.0.0.0 PORT=3000 npm start` after `npm run build`. The prototype retains `noindex,nofollow` while it contains examples. Drafts persist only in the browser; other mock state can reset on reload or application restart.
+To serve the SSR build locally, run `HOST=0.0.0.0 PORT=3000 npm start` after `npm run build`. The prototype retains `noindex,nofollow` while it contains examples. Drafts, saved searches, and preferences persist only in the browser; other mock state can reset on reload or application restart.
 
 Nuxt, Jolt, and Mavis packages come from the npm registry. The lockfile was generated by npm. There are no runtime aliases or links to neighboring repositories.
 
-Validation on November 2, 2026 covered **62 scenarios across Chromium, Firefox, and WebKit**: 184 passing executions and 2 skipped in the complete suite. The skips concern actual clipboard reads outside Chromium. The new journey checks the scroll-linked ribbon, reduced motion, and round-trip navigation. Resizing notices during entrance animations was fixed with stable wrapper origins and passed the complete suite. Build/type checks, domain tests, HTTP/SSR checks, and the control audit also passed. The hero and closing section were visually inspected on desktop and mobile; the local development server uses port 5190.
+Validation on November 2, 2026 covered **68 scenarios across Chromium, Firefox, and WebKit**. The full run recorded 201 passing executions, two clipboard skips outside Chromium, and one WebKit failure reporting an access-control error while fetching the Nuxt build manifest. The manifest returned HTTP 200, and that scenario then passed three unchanged repetitions; the transient failure was not reproduced. All 18 new executions passed, covering preferences, saved searches, cross-tab synchronization, storage failures, reduced motion, mobile accessibility, and global error recovery with draft preservation. Build/type checks, domain tests, HTTP/SSR checks, and the control audit also passed. The new mobile screens were visually inspected, and error recovery was also checked on the development server at port 5190.
 
 Checks include organization/request isolation, draft recovery after reset, stale-write rejection, idempotent events, shortcuts, evidence, publication/withdrawal, continuous rotation during revalidation, offline expiration, reduced motion, and pre-hydration edits. Axe covers the new surfaces at 390 and 1280 px, plus existing journeys at 390 and 1440 px. These checks do not replace a comprehensive accessibility audit or physical-device testing.
 
@@ -200,7 +211,7 @@ The hero combines a paper-colored background, large typography, and an interacti
 
 ## Mavis adoption
 
-See the [Mavis and Jolt adoption inventory and remaining gaps](docs/mavis-adoption.md). `npm run audit:ui` counts component usage and checks that native HTML controls are not introduced outside explicit adapters. This revision contains **27 Mavis component types and 624 static occurrences, with no custom native HTML controls**. AppDateInput adapts strings and drafts to Mavis date components; NativeDateInput was removed. These counts are not a percentage of application code. Lume's tagline is “Gentileza gera gentileza”.
+See the [Mavis and Jolt adoption inventory and remaining gaps](docs/mavis-adoption.md). `npm run audit:ui` counts component usage and checks that native HTML controls are not introduced outside explicit adapters. This revision contains **27 Mavis component types and 665 static occurrences, with no custom native HTML controls**. AppDateInput adapts strings and drafts to Mavis date components; NativeDateInput was removed. These counts are not a percentage of application code. Lume's tagline is “Gentileza gera gentileza”.
 
 ## Brand assets and link previews
 

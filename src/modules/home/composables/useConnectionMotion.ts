@@ -5,27 +5,38 @@ import {
   whenMotionAvailable,
   type MotionSurface,
 } from "@getcortexlabs/mavis-core/experimental";
-import { useMavisWebMotion } from "@getcortexlabs/mavis-web/experimental";
+import { useLumeWebMotion } from "../../../shared/motion/useLumeWebMotion";
+import { usePreferences } from "../../preferences/composables/usePreferences";
 export function useConnectionMotion(city: Ref<string>) {
+  const { reduced } = usePreferences();
   const region = markRaw(createMotionRegion()),
     surface = markRaw(createMotionSurface());
   let interaction: MotionSurface | undefined;
   const release = whenMotionAvailable([region, surface], () =>
-    surface.use((motion) => {
-      interaction = motion;
-      const pointer = motion.pointerFollow(region, {
-        range: { x: [-13, 13], y: [-10, 10] },
-        spring: { stiffness: 115, damping: 19, mass: 1 },
-      });
-      motion.bind({
-        x: pointer.x,
-        y: pointer.y,
-        rotate: pointer.x.to([-13, 13], [-5, 5]),
-      });
-      return () => {
-        interaction = undefined;
-      };
-    }),
+    watch(
+      reduced,
+      (disabled, _, cleanup) => {
+        if (disabled) return;
+        cleanup(
+          surface.use((motion) => {
+            interaction = motion;
+            const pointer = motion.pointerFollow(region, {
+              range: { x: [-13, 13], y: [-10, 10] },
+              spring: { stiffness: 115, damping: 19, mass: 1 },
+            });
+            motion.bind({
+              x: pointer.x,
+              y: pointer.y,
+              rotate: pointer.x.to([-13, 13], [-5, 5]),
+            });
+            return () => {
+              interaction = undefined;
+            };
+          }),
+        );
+      },
+      { immediate: true, flush: "sync" },
+    ),
   );
   watch(city, () =>
     interaction?.animate(
@@ -34,7 +45,7 @@ export function useConnectionMotion(city: Ref<string>) {
     ),
   );
   onScopeDispose(release);
-  useMavisWebMotion(region, (scope, element) => {
+  useLumeWebMotion(region, (scope, element) => {
     const nodes = [
       ...element.querySelectorAll<HTMLElement>("[data-network-node]"),
     ];

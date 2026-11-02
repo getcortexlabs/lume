@@ -1,6 +1,7 @@
 @import "../../modules/cases/styles/poster.css";
 @import "./mavis-integration.css";
 @import "./motion.css";
+@import "./preferences.css";
 @import "../../modules/home/styles/home.css";
 @import "../../modules/cases/styles/cases.css";
 @import "../../modules/cases/styles/search.css";

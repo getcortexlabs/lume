@@ -1,11 +1,11 @@
 import { markRaw } from "vue";
 import { createMotionRegion } from "@getcortexlabs/mavis-core/experimental";
-import { useMavisWebMotion } from "@getcortexlabs/mavis-web/experimental";
+import { useLumeWebMotion } from "../../../shared/motion/useLumeWebMotion";
 
 /** The statement enters once; the decorative line follows reading, never a timer. */
 export function useKindnessMotion() {
   const region = markRaw(createMotionRegion());
-  useMavisWebMotion(region, (scope, element) => {
+  useLumeWebMotion(region, (scope, element) => {
     const lines = [
       ...element.querySelectorAll<HTMLElement>("[data-kindness-line]"),
     ];

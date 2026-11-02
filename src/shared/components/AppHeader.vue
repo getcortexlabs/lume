@@ -54,6 +54,15 @@ watch(
         >Rede de cuidado <MIcon name="arrow-up-right" size="sm"
       /></RouterLink>
     </nav>
+    <RouterLink to="/preferences" custom v-slot="{ href, navigate }"
+      ><MButton
+        :href="href"
+        :navigate="() => navigate()"
+        icon="settings"
+        variant="ghost"
+        size="sm"
+        accessibility-label="Preferências e acessibilidade"
+    /></RouterLink>
     <RouterLink class="organization-link" to="/organization"
       ><MIcon name="panels-top-left" size="sm" /> Área da
       organização</RouterLink
@@ -76,6 +85,9 @@ watch(
         /></RouterLink>
         <RouterLink to="/organization"
           >Área da organização <MIcon name="arrow-up-right" size="sm"
+        /></RouterLink>
+        <RouterLink to="/preferences"
+          >Preferências e acessibilidade <MIcon name="settings" size="sm"
         /></RouterLink>
       </MColumn>
     </MSheet>

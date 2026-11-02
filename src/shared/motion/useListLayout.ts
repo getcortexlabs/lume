@@ -1,6 +1,6 @@
 import { markRaw, watch, type Ref } from "vue";
 import { createMotionRegion } from "@getcortexlabs/mavis-core/experimental";
-import { useMavisWebMotion } from "@getcortexlabs/mavis-web/experimental";
+import { useLumeWebMotion } from "./useLumeWebMotion";
 import type { WebItemsAnimation } from "@rafaelaugusto/jolt/web";
 /** Mavis lends one scope; layout owns outer positions and keyed entrances animate inner wrappers. */
 export function useListLayout(
@@ -8,7 +8,7 @@ export function useListLayout(
   items: Readonly<Ref<unknown>>,
 ) {
   const region = markRaw(createMotionRegion());
-  useMavisWebMotion(region, (scope) => {
+  useLumeWebMotion(region, (scope) => {
     let entrances: WebItemsAnimation | undefined;
     const stopLayout = watch(
       items,

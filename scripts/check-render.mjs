@@ -40,6 +40,7 @@ try {
     ["/cases/unknown/poster", "Este cartaz não está disponível.", 404],
     ["/guidance", "Você não precisa", 200],
     ["/network", "Seu espaço", 200],
+    ["/preferences", "Mais conforto para navegar.", 200],
     ["/cases/unknown", "Este aviso não está disponível.", 404],
     ["/unknown-route", "Esse caminho ainda não existe.", 404],
   ]) {
