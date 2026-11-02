@@ -1,201 +1,203 @@
 # Lume
 
-Front-end web da plataforma de apoio à busca de pessoas desaparecidas. Nuxt 4, Vue 3, TypeScript, Vue Router e Mavis Web. Toda a operação usa exemplos fictícios. Rascunhos ficam no armazenamento local do navegador; os demais estados permanecem em memória.
+A web frontend supporting the search for missing people. Built with Nuxt 4, Vue 3, TypeScript, Vue Router, and Mavis Web. All workflows use fictional examples. Drafts persist in browser storage; other state remains in memory.
 
-## Executar
+## Language conventions
 
-Node 22.12 ou superior.
+Use English for code identifiers, comments, documentation, READMEs, test descriptions, commit messages, pull requests, and issues. Routes, query parameter names, and navigation anchors must also be in English. Product interface text remains in Brazilian Portuguese; proper names and user-provided values retain their original language.
+
+## Getting started
+
+Requires Node 22.12 or later.
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Abra **http://127.0.0.1:5190**.
+Open **http://127.0.0.1:5190**.
 
 ```sh
-npm run build        # Tipos e servidor Nuxt/Nitro em .output/
-npm run preview      # Servir o build em http://127.0.0.1:4188
-npm test             # Contratos e invariantes do repositório mock
-npm run test:render  # Respostas HTTP do build Nuxt, conteúdo SSR e isolamento público
-npm run test:e2e     # Playwright: jornadas, SSR/hidratação, responsividade e axe
-npm run test:ssr     # HTML sem JavaScript, requisições concorrentes e edição antes da hidratação
+npm run build        # Type checking and the Nuxt/Nitro server in .output/
+npm run preview      # Serve the build at http://127.0.0.1:4188
+npm test             # Mock repository contracts and domain invariants
+npm run test:render  # HTTP responses, SSR content, and public data isolation
+npm run test:e2e     # Playwright journeys, hydration, responsive layouts, and axe
+npm run test:ssr     # HTML without JavaScript, concurrent requests, and pre-hydration edits
+npm run audit:ui     # Mavis adoption and native control audit
 ```
 
-Para executar os testes de navegador em outra máquina, instale os navegadores do Playwright com `npx playwright install chromium firefox webkit`.
+To run browser tests on another machine, install Playwright browsers with `npx playwright install chromium firefox webkit`.
 
-## Experiências
+## User journeys
 
-As URLs usam inglês: `/cases`, `/cases/:id`, `/guidance`, `/network` e `/organization`. A busca usa `search`, `city`, `age`, `sort`, `dateField`, `from`, `to`, `page` e `pageSize` na query string. Textos da interface continuam em português. Exemplo: `/cases?city=Suzano&sort=name`.
+Routes use English: `/cases`, `/cases/:id`, `/guidance`, `/network`, and `/organization`. Search query parameters are `search`, `city`, `age`, `sort`, `dateField`, `from`, `to`, `page`, and `pageSize`. Interface text is in Portuguese. Example: `/cases?city=Suzano&sort=name`.
 
-| Rota            | Experiência                                                                         |
-| --------------- | ----------------------------------------------------------------------------------- |
-| `/`             | Apresentação, escolha de cidade e avisos recentes                                   |
-| `/cases`        | Busca por nome/cidade, região e faixa etária, filtros removíveis e ordenação na URL |
-| `/cases/:id`    | Versão pública, origem, revisão, compartilhamento e retorno à busca                 |
-| `/guidance`     | Primeiros passos e referência oficial                                               |
-| `/network`      | Prévia regional de widget e tela; navegação entre avisos                            |
-| `/organization` | Fila, evidências, simulação de IA, decisão e histórico                              |
+| Route | Experience |
+| --- | --- |
+| `/` | Introduction, regional selection, and recent notices |
+| `/cases` | Search by name, city, region, and age group; removable filters and sorting stored in the URL |
+| `/cases/:id` | Public snapshot, source, review information, sharing, and return to search |
+| `/guidance` | Initial guidance and an official reference |
+| `/network` | Regional widget and display previews with notice navigation |
+| `/organization` | Review queue, evidence, simulated AI assistance, decisions, and history |
+| `/organization/cases/new` | Four-step intake, validation, simulated authorization, and public preview |
+| `/organization/drafts` | Drafts persisted in this browser |
+| `/organization/drafts/:id` | Resume and edit a saved draft |
+| `/organization/network` | Fictional partners, notice revisions, delivery failures, reconnection, and copy expiration |
+| `/organization/simulation` | Simulated latency, outages, read-only permissions, and a conflict on the next write |
 
-Novas jornadas:
+To demonstrate the full cycle, create a fictional person, save and resume the draft, submit it for review, approve publication, and open the public notice. Revalidate the publication to produce a new revision or withdraw it. In the network panel, connect a partner for the relevant city to follow revisions. Disconnect the partner before withdrawal to observe pending removal and expiration. The simulation hides expired content; reconnecting fetches the current state and does not restore a withdrawn notice.
 
-- `/organization/cases/new`: cadastro em quatro etapas, validação, autorização simulada e prévia pública.
-- `/organization/drafts` e `/organization/drafts/:id`: salvar e retomar rascunhos persistentes neste navegador.
-- `/organization/network`: parceiros fictícios, versões por aviso, falhas, reconexão e expiração das cópias.
-- `/organization/simulation`: latência, indisponibilidade, perfil somente leitura e conflito na próxima alteração.
+Search distinguishes disappearance dates from review dates, includes pagination, and preserves context while navigating between notices. A withdrawn publication shows a message without personal data. Unknown or private records remain unavailable.
 
-Para demonstrar o ciclo completo, cadastre uma pessoa fictícia, salve e retome o rascunho, envie para revisão, aprove e abra o aviso público. Na organização, revalide a divulgação para produzir uma nova versão ou retire o aviso. No painel da rede, conecte o parceiro da cidade para acompanhar as versões. Desconecte-o antes da retirada para observar pendência e expiração. A simulação remove o conteúdo expirado da exibição; reconectar reconsulta o estado atual e não restaura um aviso retirado.
+In the review queue, Antônio Lima has a fictional conflict between sources. Correct the field or accept an evidence-backed suggestion before publishing. Possible duplicates are suggested using names or municipalities, similar ages, and nearby dates; records are never merged automatically. New submissions start with manual review.
 
-A busca distingue período de desaparecimento e de revisão, inclui paginação e preserva o contexto ao navegar entre avisos. Uma publicação retirada exibe uma mensagem sem dados da pessoa; um registro inexistente ou ainda privado permanece indisponível.
+For a shorter demonstration, open `/organization`, select Beatriz Santos, provide a reason, confirm the review, and approve publication. The notice appears in search and the network preview. Withdraw it with a new reason to remove it from both. The mock blocks republication and rejects decisions based on stale revisions.
 
-Na revisão, Antônio Lima contém uma divergência fictícia entre fontes. Corrija ou aceite a sugestão com evidência antes de publicar. A comparação de possíveis duplicidades usa nome ou município, idade e período próximos; não une registros automaticamente. Cadastros novos começam com conferência manual.
+In the public experience, filter and sort at `/cases`, open a notice, and return to the previous search. Context stays in the URL and survives reloads. Each filter chip can be removed independently. Sorting distinguishes recent review, recent disappearance, and name. Sharing opens an explicitly fictional preview with copyable text and a link. The shared link excludes search parameters. If clipboard access is denied, the fields support manual selection. No messages are sent to external services.
 
-O percurso completo começa em `/organization`: selecione Beatriz Santos, informe uma justificativa, confirme a revisão e aprove. O aviso aparece na busca e na prévia da rede. Retire a divulgação usando uma nova justificativa; ele deixa ambos os lugares. O mock bloqueia republicação e rejeita decisões sobre revisões antigas.
+Drafts are saved automatically in `localStorage` and shared between tabs on the same origin, with revision checks. Publication decisions, history, and partners remain in memory and reset on reload. The organization area is an unrestricted demonstration without authentication. It accepts no real tips, submissions, or documents. There are no AI calls, crawlers, external APIs, external notifications, external synchronization, or location collection. Views communicate with mocks through a simulated local HTTP transport. The configurator at `/organization/displays` generates working embed code for local examples; it does not synchronize separate application instances.
 
-Na experiência pública, filtre e ordene em `/cases`, abra um aviso e use “Voltar para minha busca”. O contexto fica na URL e sobrevive ao recarregamento. Cada chip permite remover um filtro; a ordenação distingue revisão recente, desaparecimento recente e nome. “Compartilhar aviso” abre uma prévia explicitamente fictícia com texto e link copiáveis. O link compartilhado exclui os parâmetros da busca; se o navegador recusar a cópia, os campos permitem seleção manual. Nenhuma mensagem é enviada a serviços externos.
+## Guided pilot, organizations, and distribution
 
-Rascunhos são salvos automaticamente em `localStorage` e compartilhados entre abas da mesma origem, com controle de revisão. As decisões de publicação, os históricos e os parceiros continuam em memória: recarregar reinicia esses exemplos. A área da organização tem acesso livre de demonstração; não implementa autenticação. Nenhuma pista, cadastro ou documento real é recebido. Não há chamadas de IA, crawler, APIs externas, notificações externas, sincronização externa ou coleta de localização. A comunicação entre as telas e os mocks atravessa um transporte HTTP local simulado. O configurador em `/organization/displays` gera código de incorporação funcional para os exemplos locais; ele não oferece sincronização entre instâncias.
+- `/organization/settings`: switch between Horizonte and Aurora. Each organization has its own cases, sources, tips, network, permissions, and notifications. Drafts use separate local storage keys. Switching unmounts the previous page and rejects late responses. This simulates isolation; real authorization must be enforced by the server.
+- `/organization/notifications`: actionable local events, individual or bulk read actions, and an unread filter. Repeating a command with the same idempotency key does not duplicate notifications. There is no email or push delivery.
+- `/organization?status=in_review&case=beatriz-santos`: URL-based selection and filtering, previous/next navigation, and Alt + arrow shortcuts. Shortcuts ignore fields, dialogs, and pending changes. Evidence highlighting marks a single literal occurrence rendered as escaped text.
+- `/organization/displays`: city and interval configuration, URLs, and iframe code. `/embed` and `/screen` are standalone surfaces without the portal header or footer. The `city`, `interval`, and `organization` parameters are validated against allowlists.
+- `/organization/guide`: tracks five steps using the simulation's current state. The imported record is prepared in advance; review, publication, tip handling, and withdrawal require explicit actions. Reset requires confirmation and affects only the current organization. Drafts are preserved by default; deleting them is a separate option.
 
-## Piloto guiado, organizações e divulgação
+Displays revalidate every 20 seconds and grant each copy a 60-second validity window. Without another successful query, personal data is hidden. Rotation can be paused and starts paused when reduced motion is preferred. Changing regions invalidates stale responses. Timers and event handlers are removed on navigation. These pages render on the client so validity starts with a local query, without embedding a personal snapshot in static HTML.
 
-- `/organization/settings`: troca entre Horizonte e Aurora. Cada organização tem casos, fontes, relatos, rede, permissões e notificações próprios. Rascunhos usam chaves diferentes no armazenamento local. A troca desmonta a página anterior e rejeita respostas atrasadas. A interface simula isolamento; autorização real ainda precisa ser implementada no servidor.
-- `/organization/notifications`: eventos locais acionáveis, leitura individual/em lote e filtro de não lidas. Repetir um comando com a mesma chave de idempotência não duplica o aviso. Não há e-mail ou push.
-- `/organization?status=in_review&case=beatriz-santos`: seleção e filtro na URL, anterior/próximo e atalhos Alt + setas. Atalhos ignoram campos, diálogos e alterações em andamento. “Destacar na fonte” marca somente uma ocorrência literal, renderizada como texto escapado.
-- `/organization/displays`: configuração de cidade e intervalo, com URLs e código de iframe. `/embed` e `/screen` são superfícies independentes, sem cabeçalho/rodapé do portal. As queries `city`, `interval` e `organization` são validadas por listas permitidas.
-- `/organization/guide`: acompanha cinco etapas a partir dos dados reais da simulação. O registro importado já vem preparado; a conferência, publicação, relato e retirada são ações explícitas. Reiniciar exige confirmação e afeta apenas a organização atual. Rascunhos são preservados por padrão; sua exclusão é uma opção separada.
+Publication changes synchronize within the same application instance. A new tab, iframe, or device starts its own examples; there is no external synchronization. Reloading restores Horizonte, except on `/embed` and `/screen`, which respect an explicit organization parameter. Drafts survive reloads separately for each organization. Do not use real personal data.
 
-O modo de divulgação reconsulta a cada 20 segundos e concede validade de 60 segundos à cópia. Sem nova consulta bem-sucedida, os dados são ocultados. Rotação pode ser pausada; movimento reduzido começa pausado. Trocas de região invalidam respostas antigas. Timers e eventos são removidos ao sair da rota. Estas páginas são renderizadas no cliente para iniciar a validade com uma consulta local, sem transportar uma cópia pessoal em HTML estático.
+`createWorkspaceServices` delegates existing contracts to the active service graph. Each graph is created per application and organization. Resetting also invalidates stale draft writes. Notifications have their own contract for a future adapter, but there is no notification HTTP endpoint, backend authentication, or backend organization selection yet. Real integration must include these boundaries in the server contract.
 
-Mudanças em publicação sincronizam dentro da mesma instância da aplicação. Uma nova aba, iframe ou dispositivo inicia seus próprios exemplos; não há sincronização externa. Recarregar restaura a Horizonte, exceto nas URLs `/embed` e `/screen`, que respeitam a organização explícita. Os rascunhos sobrevivem ao recarregamento por organização. Não usar dados reais.
+## Continuity and follow-up
 
-A composição `createWorkspaceServices` delega os contratos existentes ao grafo ativo. Cada grafo é criado por aplicação e organização. Reiniciar invalida também gravações antigas no armazenamento de rascunhos. As notificações possuem contrato próprio, pronto para um adaptador futuro; ainda não há endpoint HTTP de notificações nem autenticação ou seleção de organização no backend. Para integração real, esses limites precisam fazer parte do contrato do servidor.
+- **Drafts:** autosave after 700 ms, pending/saved feedback, recovery after reload, and a warning before closing with pending changes. Internal navigation attempts to save before leaving; failures remain visible without discarding fields. Use fictional data only. Clearing browser data deletes drafts.
+- **Persistence:** `DraftStore` is injected at composition time. The adapter validates local data, rejects stale revisions across tabs, and preserves corrupted storage rather than overwriting it. UUIDs prevent identifier reuse. This is a local simulation without cross-device synchronization or distributed transaction guarantees across tabs.
+- **History:** the review comparison shows changes between the current and a previous revision, including status, public fields, reviewer, and reason. Snapshots remain private and are excluded from the public Nuxt payload.
+- **Posters:** `/cases/:id/poster` includes a locally generated QR code, source, revision, demonstration notice, and A4 print styles. The print/PDF action uses the browser dialog and revalidates publication before opening. Withdrawal removes the poster during the session. Printed copies cannot be updated; the QR code points to the current notice. A localhost URL is only accessible on the same device.
+- **Follow-up:** `/organization/tasks` collects initial reviews, publications reviewed more than 24 hours ago, sources unavailable or not updated for 72 hours, and distribution problems. These thresholds are for demonstration. Actions open the relevant review or channel; simulated source recovery resolves its task without contacting external services.
+- **Source timestamps:** checking a source and a source updating its information are separate events. A source failure does not change a person's status or confirm that they have been found.
 
-## Continuidade e acompanhamento
+QR codes use [node-qrcode](https://github.com/soldair/node-qrcode), loaded only on the poster route. There is no external QR generation service.
 
-- Rascunhos: salvamento automático após 700 ms, indicação de pendência/salvamento, retomada após recarregar e aviso antes de fechar com alterações pendentes. A navegação interna tenta salvar antes de sair; falhas são mostradas sem descartar os campos. Apenas dados fictícios devem ser usados. Limpar os dados do navegador apaga os rascunhos.
-- Persistência: `DraftStore` é injetado na composição. O adaptador valida o formato local, rejeita revisões antigas entre abas e não substitui armazenamento corrompido. Identificadores UUID evitam reutilização. É uma simulação local, sem sincronização entre dispositivos ou garantia de transação distribuída entre abas.
-- Histórico: “O que mudou” na revisão compara a versão atual com uma anterior, incluindo situação, campos públicos, revisor e justificativa. Os snapshots permanecem privados e não entram no payload público do Nuxt.
-- Cartaz: `/cases/:id/poster`, acessível em “Preparar cartaz”, tem QR gerado localmente, origem, revisão, aviso de demonstração e CSS de impressão A4. “Imprimir ou salvar PDF” usa o diálogo do navegador e reconsulta a publicação antes de abrir. A retirada remove o cartaz durante a sessão. Impressos não podem ser atualizados; o QR aponta à página atual. Em localhost, o endereço só é acessível no próprio dispositivo.
-- Pendências: `/organization/tasks` reúne revisão inicial, publicações revisadas há mais de 24 horas, fontes indisponíveis ou sem atualização há 72 horas e problemas de distribuição. Os prazos são de demonstração. As ações levam à revisão/canal correto, e a simulação de atualização de fonte resolve sua pendência sem consultar serviços externos.
-- Consulta e atualização de fonte têm datas distintas. Uma falha na fonte não altera a situação da pessoa ou confirma localização.
+## Sources, withdrawals, and private tips
 
-O QR usa [node-qrcode](https://github.com/soldair/node-qrcode), empacotado somente na rota do cartaz. Não há serviço externo de geração.
+- `/organization/sources`: create or edit a fictional source, assign responsibility, configure a 1–168-hour interval, and activate it. Inspect imported, duplicate, and conflicting records with direct access to review. A query updates the attempt timestamp and, on success, the last successful query; it preserves the source's own update timestamp. Recovery is explicitly simulated and never requests the configured URL.
+- `/organization/drafts`: duplicate drafts with authorization cleared, or delete them after confirmation. Conflicts show local values and values from another tab. Independent edits can be combined; fields changed on both sides require a choice. Users can adopt the saved revision or copy local edits, including after another tab deletes the draft.
+- `/organization/withdrawals`: track each notice and channel, distinguishing confirmed withdrawal, pending removal, expired validity without confirmation, and no delivery. Manual retries and channel navigation are available; a suggested retry date is not a scheduled job.
+- `/organization/tips`: receive a fixed fictional sample, review it, simulate forwarding to demonstration recipients, and simulate acknowledgment. No public form accepts real tips. Original text, uncertainty, and approximate times are preserved. Receipt, forwarding, and acknowledgment are distinct states with private revision history.
+- `/organization/simulation`: the HTTP panel lists up to 20 methods, paths, and response codes without bodies or search values. Permissions, latency, outages, and conflicts also affect these workflows.
 
-## Fontes, retiradas e relatos privados
+`src/shared/http/client.ts` defines a Nuxt-independent client. `src/app/http/http-repositories.ts` implements repository contracts using it. `mock-http-transport.ts` receives Request objects and returns Response objects in process: **it does not use network fetch, a service worker, or a business backend**. The simulation covers 200/201/204, 403, 404/410, 409, 422, and 503 responses, pagination, and idempotent retries. Local event subscriptions are a separate interface for future invalidation, polling, or server events.
 
-- `/organization/sources`: cadastrar/editar fonte fictícia, responsável, intervalo de 1–168 horas e ativação. Inspecionar registros importados, repetidos e divergentes, com acesso direto à revisão. Consultar atualiza a tentativa e, se houver sucesso, a última consulta concluída; preserva a atualização informada pela origem. Recuperação é uma ação explicitamente simulada, sem acesso à URL cadastrada.
-- `/organization/drafts`: duplicar (com autorização desmarcada) e excluir mediante confirmação. No editor, um conflito mostra os valores locais e da outra aba. Alterações independentes podem ser combinadas; campos modificados dos dois lados exigem escolha. Também é possível adotar a versão salva ou criar uma cópia das edições locais, inclusive após exclusão em outra aba.
-- `/organization/withdrawals`: acompanhamento por aviso e canal, distinguindo retirada confirmada, pendência, validade expirada sem confirmação e ausência de entrega. A tela oferece tentativa manual e acesso ao canal; a data sugerida de repetição não representa um job agendado.
-- `/organization/tips`: receber um texto de exemplo fixo e fictício, revisar, simular encaminhamento para destinatários de demonstração e simular confirmação. Não existe formulário público que receba relatos reais. Texto original, dúvidas e horário aproximado são preservados. Receber, encaminhar e confirmar são estados diferentes, com revisão e histórico reservados.
-- `/organization/simulation`: o painel HTTP lista até 20 métodos, rotas e códigos de resposta, sem bodies ou valores de busca. Perfis, latência, indisponibilidade e conflitos afetam também as novas jornadas.
-
-`src/shared/http/client.ts` define o cliente independente de Nuxt. `src/app/http/http-repositories.ts` implementa os contratos de repositório usando esse cliente. `mock-http-transport.ts` recebe objetos Request e devolve Response dentro do processo: **não usa fetch de rede, service worker ou servidor de negócio**. A simulação representa 200/201/204, 403, 404/410, 409, 422 e 503, paginação e repetição idempotente. As assinaturas locais de eventos são uma porta separada para futura invalidação, polling ou eventos de servidor.
-
-## Organização
+## Architecture
 
 ```text
 src/
-  app.vue                 # Shell Nuxt com NuxtPage
-  pages/                  # Rotas Nuxt em inglês, delegando às views dos módulos
-  plugins/                # Mavis, serviços por aplicação/requisição e payload público
-  app/                    # Tema, composição e adaptadores HTTP injetados
+  app.vue                 # Nuxt shell with NuxtPage
+  pages/                  # English Nuxt routes delegating to module views
+  plugins/                # Mavis, per-app/request services, and public payload
+  app/                    # Theme, composition, and injected HTTP adapters
   modules/
     cases/
-      domain/             # Tipos, filtros e contrato CaseRepository
-      data/               # Fixtures e adaptador mock
-      composables/        # Consultas reativas e ciclo de vida
-      presentation/       # Opções, contexto da busca na URL e ordenação
-      components/         # Cards, filtros, ilustrações e orientação
-      views/              # Páginas de busca e detalhe
+      domain/             # Types, filters, and CaseRepository contract
+      data/               # Fixtures and mock adapter
+      composables/        # Reactive queries and lifecycle coordination
+      presentation/       # Choices, URL search context, and sorting
+      components/         # Cards, filters, illustrations, and guidance
+      views/              # Search and detail pages
       styles/
-    home/                 # Apresentação e ilustração da rede
-    help/                 # Orientação
-    network/              # Configuração e prévia para parceiros
-    review/               # Fila, sugestões com evidências, editor e histórico
-    intake/               # Cadastro, validação, rascunhos e prévia pública
-    sources/              # Gestão de fontes, responsabilidade, frequência e importações fictícias
-    tips/                 # Relatos privados simulados e encaminhamento por etapas
-    operations/           # Pendências derivadas, prazos e saúde de fontes fictícias
-    simulation/           # Cenários de falha e permissões simuladas
+    home/                 # Introduction and network artwork
+    help/                 # Guidance
+    network/              # Partner configuration and previews
+    review/               # Queue, evidence-backed suggestions, editor, and history
+    intake/               # Intake, validation, drafts, and public preview
+    sources/              # Source ownership, frequency, and fictional imports
+    tips/                 # Simulated private tips and staged forwarding
+    operations/           # Derived tasks, deadlines, and fictional source health
+    simulation/           # Failure scenarios and simulated permissions
   shared/
-    components/           # Cabeçalho, rodapé, marca, diálogo e 404
-    http/                 # Cliente Request/Response e diagnósticos sem conteúdo privado
-    composables/          # Recursos assíncronos e clipboard
-    styles/               # Tokens e base visual
-contracts/                # Proposta OpenAPI para a integração futura
-scripts/                  # Verificações de domínio e renderização
-tests/                   # Jornadas Playwright e acessibilidade
+    components/           # Header, footer, branding, dialog, and 404
+    http/                 # Request/Response client and privacy-preserving diagnostics
+    composables/          # Async resources and clipboard
+    styles/               # Tokens and visual foundation
+contracts/                # Proposed OpenAPI contract for future integration
+scripts/                  # Domain and rendering checks
+tests/                    # Playwright journeys and accessibility checks
 ```
 
-Páginas compõem componentes. Composables coordenam estado e serviços. O domínio não depende de Vue. Os adaptadores implementam o contrato de acesso a dados; componentes não conhecem fixtures e não fazem `fetch`. Dependências são injetadas na criação de cada aplicação, sem estado de usuário em singletons.
+Pages compose components. Composables coordinate state and services. The domain does not depend on Vue. Adapters implement data access contracts; components do not import fixtures or call `fetch`. Dependencies are injected for each application, with no user state in singletons.
 
-Mavis alpha.6 fornece os controles, layouts e superfícies do Lume. A abertura usa uma timeline finita; a rede desenha conexões SVG com drawPath do Jolt RC.8 e responde à escolha da cidade. MStack organiza agrupamentos responsivos. Os cards e CTAs usam links reais Mavis com RouterLink. MReveal substituiu AppReveal/useRevealHeight; MDatePicker recebe rascunhos incompletos diretamente. O gerador oficial useMavisTokens substituiu o local. A busca combina animateLayout e entradas por identidade; cards respondem ao foco e ao ponteiro usando MotionSurface. O tema está em `src/app/theme.ts`, o logo original permanece em `public/brand/lume-original.png` e a assinatura continua “Gentileza gera gentileza”.
+Mavis alpha.6 provides controls, layouts, and motion surfaces. The hero uses a finite timeline; the network draws SVG connections with Jolt RC.8 `drawPath` and responds to city selection. MStack organizes responsive groups. Cards and calls to action use real Mavis links composed with RouterLink. MReveal replaced AppReveal/useRevealHeight; MDatePicker accepts incomplete drafts directly. The public useMavisTokens replaced the local token generator. Search combines animateLayout with keyed entrances; cards respond to focus and pointer interaction through MotionSurface. The theme is in `src/app/theme.ts`, the original logo is in `public/brand/lume-original.png`, and the tagline remains “Gentileza gera gentileza” (“Kindness inspires kindness”).
 
-## Evolução para APIs e SSR
+## API integration and SSR
 
-O Lume usa **Nuxt 4.6.3**, Vue 3.5.44 e Vue Router 5.4.0. As páginas públicas são renderizadas no servidor e hidratadas no navegador. A área `/organization` e suas subrotas usam renderização no cliente enquanto a operação é mock. Não há API de negócio, autenticação ou banco de dados.
+Lume uses **Nuxt 4.6.3**, Vue 3.5.44, and Vue Router 5.4.0. Public pages render on the server and hydrate in the browser. `/organization` and its subroutes render on the client while operations remain mocked. There is no business API, authentication, or database.
 
-O plugin `src/plugins/lume.ts` cria uma instância dos serviços para cada aplicação/requisição. Apenas resultados das consultas públicas são transferidos pelo payload Nuxt; o repositório completo, evidências, sugestões internas e histórico de revisão não são serializados. O adaptador `resource-hydration` mantém os módulos independentes do Nuxt e reutiliza o resultado inicial durante a hidratação. O tema começa em `light` nos dois lados. Os rascunhos usam um adaptador local injetado somente no cliente; o restante do estado mock reinicia ao recarregar.
+`src/plugins/lume.ts` creates services per application/request. Only public query results enter the Nuxt payload; the full repository, evidence, internal suggestions, and review history are not serialized. The `resource-hydration` adapter keeps modules independent of Nuxt and reuses initial results during hydration. The theme starts in `light` on both sides. Drafts use a local adapter injected only on the client; other mock state resets on reload.
 
-Avisos indisponíveis e rotas desconhecidas retornam HTTP 404 em acessos diretos. Uma retirada durante a sessão elimina a projeção pública, mas não persiste no servidor mock após um recarregamento. SSR não altera essa limitação de persistência. SSR e hidratação foram exercitados no servidor Nitro `node-server`; SSG, outros presets e implantação pública não foram validados neste projeto.
+Unavailable notices and unknown routes return HTTP 404 on direct navigation. Withdrawing a notice during a session removes its public projection but does not persist in the mock server after reload. SSR does not change this limitation. SSR and hydration have been tested with Nitro's `node-server` preset; SSG, other presets, and public deployment have not been validated in this project.
 
-O contrato proposto está em [contracts/lume-api.openapi.json](contracts/lume-api.openapi.json). Define projeções públicas e reservadas, paginação, parâmetros, erros, revisão esperada e idempotência. São 19 caminhos exercitados pelo transporte local, sem endpoint de negócio implantado. O mock testa repetição de comandos, conflito de versões e descarte de eventos antigos da rede. As respostas são comparadas com os schemas OpenAPI nos testes. Os endpoints marcados `x-demo-only` modelam ações exclusivas desta demonstração.
+The proposed contract is in [contracts/lume-api.openapi.json](contracts/lume-api.openapi.json). It defines public and private projections, pagination, parameters, errors, expected revisions, and idempotency. The local transport exercises 19 paths without a deployed business endpoint. Tests cover command replay, revision conflicts, and rejection of stale network events, and compare responses against OpenAPI schemas. Endpoints marked `x-demo-only` represent demonstration-only actions.
 
-Para integrar a API:
+To integrate the API:
 
-1. Substitua o transporte local de `createDemoServices` por um transporte de rede autenticado. Os adaptadores de `CaseRepository`, `SourcesRepository`, `TipsRepository` e `NetworkRepository` já convertem as chamadas em Request/Response.
-2. Preserve a injeção por aplicação/requisição pelo contrato `AppServices` no plugin Nuxt. O controle de simulação pertence apenas ao protótipo e deve ser removido da composição de produção.
-3. Encaminhe versão esperada, chave de idempotência, erros de domínio e justificativa nas decisões.
-4. Implemente autorização e isolamento no servidor; a interface não é uma barreira de segurança.
-5. Substitua as notificações locais do repositório pelo mecanismo de revalidação escolhido.
+1. Replace the local `createDemoServices` transport with an authenticated network transport. The `CaseRepository`, `SourcesRepository`, `TipsRepository`, and `NetworkRepository` adapters already map calls to Request/Response objects.
+2. Preserve per-application/request injection through `AppServices` in the Nuxt plugin. Simulation controls belong to the prototype and must be removed from production composition.
+3. Include expected revisions, idempotency keys, domain errors, and decision reasons.
+4. Enforce authorization and isolation on the server; the interface is not a security boundary.
+5. Replace local repository notifications with the chosen revalidation mechanism.
 
-Para conectar serviços reais, preserve a criação por requisição, transporte somente projeções autorizadas e implemente autenticação, isolamento, cache/invalidação e persistência no backend. A regra de renderização da organização pode ser reavaliada quando houver autenticação no servidor. Os controles de simulação são ferramentas do protótipo e não devem compor a aplicação de produção.
+Real services must preserve per-request initialization, transfer only authorized projections, and implement backend authentication, isolation, cache invalidation, and persistence. The organization area's rendering policy can be revisited once server authentication exists. Simulation controls must not become production features.
 
-A projeção `PublicCase` usa uma lista explícita de campos; evidências e histórico ficam somente em `ReviewCase`. O mock é uma conveniência de desenvolvimento, não uma implementação de proteção de dados para produção.
+`PublicCase` uses an explicit field allowlist. Evidence and history remain in `ReviewCase`. The mock is a development convenience, not a production data protection implementation.
 
-Mavis Web/Core estão fixados na **release npm 0.1.0-alpha.6**, e Jolt em **0.1.0-rc.8**. A tag [`v0.1.0-alpha.6`](https://github.com/getcortexlabs/mavis-ui/releases/tag/v0.1.0-alpha.6) resolve para o commit `81b6b6b6e6576511755d6ee5a5943d9bcd66e09d`. `vendor/manifest.json` registra a procedência, e package-lock fixa as URLs e integridades do npm. Não há dependência de tarballs locais ou do checkout vizinho.
+Mavis Web/Core are pinned to **npm release 0.1.0-alpha.6**, and Jolt to **0.1.0-rc.8**. Tag [`v0.1.0-alpha.6`](https://github.com/getcortexlabs/mavis-ui/releases/tag/v0.1.0-alpha.6) resolves to commit `81b6b6b6e6576511755d6ee5a5943d9bcd66e09d`. `vendor/manifest.json` records provenance, and package-lock pins npm URLs and integrity hashes. There are no dependencies on local tarballs or neighboring checkouts.
 
-A migração substituiu o campo de data nativo, paginação manual, indicadores de etapa, cálculo do ponteiro, observação de viewport e transições/layout CSS pelas APIs equivalentes disponíveis. O domínio e a operação continuam inteiramente mock. Antes de cada troca de release, execute build, domínio, SSR, auditoria e navegador.
+The migration replaced the native date field, manual pagination, step indicators, pointer calculations, viewport observation, and CSS transitions/layout animation with available library APIs. Domain operations remain fully mocked. Before each release upgrade, run build, domain, SSR, UI audit, and browser checks.
 
-## Hospedagem e validação desta entrega
+## Hosting and validation
 
-Destino planejado: **lume.getcortexlabs.com**. O repositório contém uma aplicação Nuxt/Nitro com servidor Node, não uma exportação estática. As páginas públicas usam SSR; `/organization/**`, `/embed` e `/screen` continuam renderizadas no cliente e com `no-store`. O backend de negócio ainda é mock: SSR não significa que as APIs reais já foram implementadas.
+Planned domain: **lume.getcortexlabs.com**. This repository contains a Nuxt/Nitro Node server, not a static export. Public pages use SSR; `/organization/**`, `/embed`, and `/screen` remain client-rendered with `no-store`. The business backend is still mocked: SSR does not mean real APIs have been implemented.
 
-### Deploy no Orbit
+### Deploying with Orbit
 
-Crie uma **aplicação web de repositório** no Orbit com:
+Create a **repository-backed web application** in Orbit with:
 
-| Configuração | Valor |
+| Setting | Value |
 | --- | --- |
-| Repositório | `https://github.com/getcortexlabs/lume.git` |
+| Repository | `https://github.com/getcortexlabs/lume.git` |
 | Branch | `main` |
-| Diretório | raiz do repositório |
-| Estratégia | Build automático / Nuxt |
-| Instalação | `npm ci` (detectado pelo lockfile) |
+| Directory | Repository root |
+| Strategy | Automatic build / Nuxt |
+| Install | `npm ci` (detected from the lockfile) |
 | Build | `npm run build` |
 | Start | `node .output/server/index.mjs` |
-| Porta | `3000` |
-| Verificação de saúde HTTP | `/` |
-| Ambiente | `NODE_ENV=production`, `HOST=0.0.0.0`, `PORT=3000` |
-| Domínio | `lume.getcortexlabs.com` |
+| Port | `3000` |
+| HTTP health check | `/` |
+| Environment | `NODE_ENV=production`, `HOST=0.0.0.0`, `PORT=3000` |
+| Domain | `lume.getcortexlabs.com` |
 
-O build automático do Orbit detecta a dependência `nuxt`, usa Node 22 e executa esse servidor em um contêiner no Kubernetes. Não selecionar **Arquivos estáticos** nem publicação por Space. O Orbit gerencia a imagem, os recursos do Kubernetes e o roteamento; não há manifests paralelos neste repositório. O domínio precisa ser associado à aplicação no Orbit, com o DNS correspondente.
+Orbit's automatic build detects the `nuxt` dependency, uses Node 22, and runs the server in a Kubernetes container. Do not select static files or Space publishing. Orbit manages the image, Kubernetes resources, and routing; this repository does not maintain parallel manifests. Associate the domain with the application in Orbit and configure the corresponding DNS records.
 
-Um push só dispara deploy automático depois que a aplicação estiver conectada ao repositório e esse comportamento estiver configurado no Orbit. Publicar o código no GitHub não comprova que o serviço ou o domínio já estejam no ar.
+A push only triggers automatic deployment after the application is connected to the repository and that behavior is configured in Orbit. Publishing code to GitHub does not confirm that the service or domain is live.
 
-Para servir localmente o build SSR, execute `HOST=0.0.0.0 PORT=3000 npm start` após `npm run build`. O protótipo mantém `noindex,nofollow` enquanto contém exemplos. Rascunhos persistem apenas no navegador; outros estados mock podem ser reiniciados ao recarregar ou reiniciar a aplicação.
+To serve the SSR build locally, run `HOST=0.0.0.0 PORT=3000 npm start` after `npm run build`. The prototype retains `noindex,nofollow` while it contains examples. Drafts persist only in the browser; other mock state can reset on reload or application restart.
 
+Nuxt, Jolt, and Mavis packages come from the npm registry. The lockfile was generated by npm. There are no runtime aliases or links to neighboring repositories.
 
-Nuxt, Jolt e os pacotes Mavis vêm do registry npm. O lockfile foi atualizado pelo npm. Não há alias ou vínculo de runtime com o repositório vizinho.
+Validation on November 2, 2026 covered **62 scenarios across Chromium, Firefox, and WebKit**: 184 passing executions and 2 skipped in the complete suite. The skips concern actual clipboard reads outside Chromium. The new journey checks the scroll-linked ribbon, reduced motion, and round-trip navigation. Resizing notices during entrance animations was fixed with stable wrapper origins and passed the complete suite. Build/type checks, domain tests, HTTP/SSR checks, and the control audit also passed. The hero and closing section were visually inspected on desktop and mobile; the local development server uses port 5190.
 
-A validação de 2 de novembro de 2026 cobre **62 cenários em Chromium, Firefox e WebKit**: 184 execuções aprovadas e 2 ignoradas na suíte completa. Os dois ignorados são a leitura real do clipboard fora do Chromium. A nova jornada verifica a faixa ligada à rolagem, movimento reduzido e navegação de ida e volta. O redimensionamento dos avisos durante a entrada foi corrigido com origem fixa nos wrappers e passou na suíte completa. Build/tipos, domínio, SSR HTTP e auditoria de controles também passaram. A abertura e o encerramento foram inspecionados em desktop e celular; o servidor local responde na porta 5190.
+Checks include organization/request isolation, draft recovery after reset, stale-write rejection, idempotent events, shortcuts, evidence, publication/withdrawal, continuous rotation during revalidation, offline expiration, reduced motion, and pre-hydration edits. Axe covers the new surfaces at 390 and 1280 px, plus existing journeys at 390 and 1440 px. These checks do not replace a comprehensive accessibility audit or physical-device testing.
 
-As verificações incluem isolamento entre organizações e requisições, reinício com preservação de rascunhos, rejeição de gravações antigas, eventos idempotentes, atalhos, evidências, publicação/retirada, rotação contínua durante revalidação, expiração offline, redução de movimento e edição anterior à hidratação. Axe cobre as novas superfícies em 390 e 1280 px, além das jornadas anteriores em 390 e 1440 px. Essas verificações não substituem uma auditoria completa de acessibilidade ou testes em dispositivos físicos.
+## Visual direction
 
-## Direção visual
+The hero combines a paper-colored background, large typography, and an interactive regional network. The original symbol appears in a poster-like composition without diffuse glow. Titles and city controls enter in sequence; Jolt draws the underline. Notices and participation cards respond to pointer and keyboard interaction. “Gentileza gera gentileza” has its own section with line-by-line entrances and a decorative scroll-linked ribbon. Animations respect `prefers-reduced-motion` and release their resources on navigation.
 
-A abertura usa fundo de papel, tipografia grande e uma rede gráfica interativa por cidade. O símbolo original aparece em uma composição de cartaz, sem brilho difuso. Título e cidades entram em sequência; o sublinhado é desenhado pelo Jolt. Avisos e formas de ajudar respondem ao mouse e ao teclado. “Gentileza gera gentileza” ganha uma seção própria com entrada por linha e uma faixa decorativa ligada à rolagem. As animações respeitam `prefers-reduced-motion` e liberam seus recursos na navegação.
+## Mavis adoption
 
-## Adoção do Mavis
-
-Consulte [o inventário e as lacunas revisadas do Mavis e Jolt](docs/mavis-adoption.md). `npm run audit:ui` contabiliza os componentes usados e verifica que controles HTML não sejam introduzidos fora de adaptadores explícitos. Nesta revisão são **27 tipos Mavis e 624 ocorrências estáticas, sem controles HTML nativos próprios**. AppDateInput adapta strings/rascunhos para os componentes de data Mavis; a implementação NativeDateInput foi removida. Isso não transforma a contagem em porcentagem do código da aplicação. A assinatura do Lume é “Gentileza gera gentileza”.
+See the [Mavis and Jolt adoption inventory and remaining gaps](docs/mavis-adoption.md). `npm run audit:ui` counts component usage and checks that native HTML controls are not introduced outside explicit adapters. This revision contains **27 Mavis component types and 624 static occurrences, with no custom native HTML controls**. AppDateInput adapts strings and drafts to Mavis date components; NativeDateInput was removed. These counts are not a percentage of application code. Lume's tagline is “Gentileza gera gentileza”.

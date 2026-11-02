@@ -1,77 +1,77 @@
-# Adoção do Mavis no Lume
+# Mavis adoption in Lume
 
-Revisão: 2 de novembro de 2026. Mavis Web/Core **0.1.0-alpha.6** e Jolt **0.1.0-rc.8**, instalados do npm com versões exatas. A tag Mavis aponta para `81b6b6b6e6576511755d6ee5a5943d9bcd66e09d`. `vendor/manifest.json` registra a procedência e o lockfile preserva URLs/integridades. Nenhum checkout vizinho foi alterado.
+Reviewed on November 2, 2026. Mavis Web/Core **0.1.0-alpha.6** and Jolt **0.1.0-rc.8** are installed from npm with exact versions. The Mavis tag points to `81b6b6b6e6576511755d6ee5a5943d9bcd66e09d`. `vendor/manifest.json` records provenance, and the lockfile preserves package URLs and integrity hashes. No neighboring checkout was modified.
 
-## Uso atual
+## Current usage
 
-A auditoria registra **27 tipos Mavis, 624 ocorrências estáticas e nenhum controle HTML nativo próprio**. Essa contagem não representa porcentagem do código nem autoria visual: extrair as três formas de ajudar para uma composição reutilizável reduz ocorrências enquanto amplia o uso dos componentes.
+The audit reports **27 Mavis component types, 624 static occurrences, and no custom native HTML controls**. This count is not a percentage of code or visual authorship: extracting the three participation options into a reusable composition reduces static occurrences while expanding component reuse.
 
-## O que a alpha.6 substituiu
+## What alpha.6 replaced
 
-| Antes no Lume | Agora |
+| Previously in Lume | Current implementation |
 | --- | --- |
-| AppReveal + useRevealHeight | MReveal diretamente: altura automática, presença durante fechamento, reversão, foco e movimento reduzido. Os dois arquivos locais foram removidos. |
-| MInput como fallback para datas incompletas | MDatePicker com `draft` controlado. A data parcial persiste e o calendário continua disponível. |
-| CSS de prontidão do calendário | Ações de calendário aguardam hidratação dentro do Mavis. |
-| Gerador local useMavisTokens e variáveis `--lume-*` | useMavisTokens público e variáveis `--m-color-*`, `--m-space-*`, `--m-radius-*`, `--m-type-*`. |
-| Card dentro de RouterLink com aparência de link manual | MCard com `href` e `navigate`, composto com o slot custom do RouterLink: uma âncora real, com press do Mavis. |
-| CTAs manuais da abertura | MButton com navegação real e MLink na legenda regional. |
-| Flex editorial em agrupamentos selecionados | MStack nas ações da abertura, nas formas de ajudar e na barra dos resultados. |
-| Entrada CSS da abertura | Timeline finita em useMavisWebMotion, sobre wrappers HTML da aplicação. |
-| SVG com stroke-dashoffset/keyframes CSS | Três caminhos contínuos controlados por `scope.drawPath`. Trocar a cidade desenha seu caminho e recolhe os anteriores. |
-| Runtime isolado para a lista | Região MBox com escopo emprestado: animateLayout nos wrappers externos e animateItems nos internos, com identidade por aviso. |
-| Diretiva viewport escrita à mão | createViewportEnterDirective do Jolt, criada por componente, com entradas estáveis e conteúdo SSR legível. |
-| CSS concorrendo com transforms dos cards | MotionSurface no card para hover/foco, compondo com press do Mavis. |
+| AppReveal + useRevealHeight | Direct MReveal usage: automatic height, closing presence, reversal, focus, and reduced motion. Both local files were removed. |
+| MInput fallback for incomplete dates | MDatePicker with a controlled `draft`. Partial dates persist while the calendar remains available. |
+| Calendar readiness CSS | Mavis waits for hydration before enabling calendar actions. |
+| Local useMavisTokens generator and `--lume-*` variables | Public useMavisTokens and `--m-color-*`, `--m-space-*`, `--m-radius-*`, and `--m-type-*` variables. |
+| Card inside RouterLink with custom link styling | MCard with `href` and `navigate`, composed through RouterLink's custom slot: one real anchor with Mavis press feedback. |
+| Custom hero calls to action | MButton with real navigation and MLink in the regional caption. |
+| Custom flex layout in selected groups | MStack for hero actions, participation options, and the results toolbar. |
+| CSS hero entrance | Finite useMavisWebMotion timeline targeting application-owned HTML wrappers. |
+| SVG stroke-dashoffset and CSS keyframes | Three continuous paths controlled by `scope.drawPath`. Selecting a city draws its path and retracts the others. |
+| Separate list runtime | MBox region with a borrowed scope: animateLayout on outer wrappers and animateItems on inner wrappers, keyed by notice. |
+| Handwritten viewport directive | Jolt's createViewportEnterDirective, created per component with stable inputs and readable SSR content. |
+| CSS competing with card transforms | MotionSurface for card hover/focus, composed with Mavis press feedback. |
 
-## Acabamento visual e movimento
+## Visual refinement and motion
 
-- A frase “Gentileza gera gentileza”, o título, as ações e o contexto entram em sequência. O texto mantém contraste completo durante o movimento.
-- A rede responde à cidade escolhida, ao ponteiro e ao toque; o símbolo pulsa brevemente e a legenda acompanha a seleção. A cena é ilustrativa, sem contadores fictícios apresentados como impacto real.
-- A observação de geometria do Jolt acompanha alterações de texto, fontes e largura nas superfícies HTML animadas.
-- Os avisos preservam suas chaves durante filtros e ordenação. O reposicionamento e a entrada atuam em wrappers diferentes, sem disputar a superfície de press do card.
-- Os retornos administrativos usam OperationFeedback: composição de Reveal, Card, Icon e Text, sem alterar decisões do domínio.
-- A troca de avisos nas telas usa useContentTransition sobre o adapter Vue do Jolt. Expiração, pausa e retirada continuam sendo decisões da aplicação.
-- Durações de entrada/saída e press vêm do tema Mavis. As sequências da identidade têm tempos próprios do produto, finitos e canceláveis.
+- The tagline, heading, actions, and context enter in sequence. Text retains full contrast during motion.
+- The network responds to city selection, pointer movement, and touch. The symbol pulses briefly and the caption follows the selection. The scene is illustrative; fictional counters are not presented as real impact.
+- Jolt's geometry observation tracks text, font, and width changes on animated HTML surfaces.
+- Notices retain their keys during filtering and sorting. Layout and entrance animations target separate wrappers without competing with the card's press surface.
+- Administrative feedback uses OperationFeedback, composing Reveal, Card, Icon, and Text without changing domain decisions.
+- Display rotation uses useContentTransition through Jolt's Vue adapter. Expiration, pause, and withdrawal remain application decisions.
+- Entrance, exit, and press durations come from the Mavis theme. Brand-specific sequences use finite, cancelable product timings.
 
-A preferência de movimento reduzido é respeitada. A coreografia da abertura evita fades de texto; movimento não bloqueia navegação. Não há animações decorativas infinitas. Todos os recursos e watchers adicionais são liberados junto do escopo. As opções da diretiva de entrada mantêm identidade estável entre renders, evitando recriar observadores nas atualizações de layout.
+Reduced-motion preferences are respected. Hero choreography avoids text fades, and motion does not block navigation. There are no infinitely looping decorative animations. Resources and additional watchers are released with the scope. Entrance directive options retain their identity across renders, avoiding observer recreation during layout updates.
 
-## Direção editorial e rolagem
+## Editorial composition and scrolling
 
-A página inicial usa fundo de papel, títulos fortes, avisos com bordas de cartaz e uma rede gráfica sem glassmorphism ou brilho difuso. O símbolo original é preservado; na rede, uma versão monocromática é obtida com CSS.
+The homepage uses a paper-colored background, strong headings, poster-like notice borders, and a graphic network without glassmorphism or diffuse glow. The original symbol is preserved; CSS produces a monochrome version for the network.
 
-A abertura entra por linha e desenha o sublinhado com drawPath. Wrappers HTML da aplicação recebem a animação; os MText internos preservam a tipografia e o contrato de conteúdo do Mavis. As cidades entram em sequência em wrappers separados dos botões. Os wrappers de entrada dos avisos e das formas de ajudar usam origem fixa: suas translações não dependem de um centro que muda de posição no breakpoint. CareJourney reaproveita MotionSurface para hover e foco.
+The hero enters line by line and draws its underline with drawPath. Application-owned HTML wrappers receive the animation; nested MText components retain Mavis typography and content contracts. Cities enter sequentially in wrappers separate from their buttons. Entrance wrappers for notices and participation options have fixed origins: their translations do not depend on a center that changes at a breakpoint. CareJourney reuses MotionSurface for hover and focus.
 
-useKindnessMotion usa viewportEnter nas duas linhas do manifesto e scrollLinked na faixa decorativa. A faixa responde à leitura, sem timer ou reprodução infinita. O texto repetido é aria-hidden, e o título real permanece disponível. O escopo Mavis libera os recursos na navegação. MThemeProvider define o contraste dos MLink nas duas superfícies escuras.
+useKindnessMotion applies viewportEnter to the two statement lines and scrollLinked to the decorative ribbon. The ribbon follows reading rather than a timer or infinite playback. Repeated text is aria-hidden, while the actual heading remains accessible. The Mavis scope releases resources on navigation. MThemeProvider establishes MLink contrast on both dark surfaces.
 
-## O que permanece local
+## What remains in the application
 
-**Composição do produto:** useHeroMotion, useConnectionMotion, useCardEmphasis, useListLayout, useContentTransition, useKindnessMotion e CareJourney descrevem quais elementos respondem, quando e com qual intenção. Mavis/Jolt executam interpolação, desenho, press, observação, interrupção e descarte. Esses composables não são motores alternativos nem recursos ausentes nas bibliotecas.
+**Product composition:** useHeroMotion, useConnectionMotion, useCardEmphasis, useListLayout, useContentTransition, useKindnessMotion, and CareJourney define which elements respond, when, and why. Mavis/Jolt handle interpolation, path drawing, press feedback, observation, interruption, and disposal. These composables are neither alternative engines nor missing library features.
 
-**Identidade e layout editorial:** grades de avisos, tipografia fluida, proporções, fundos e posicionamento da rede continuam em CSS do Lume. MStack resolve stacks responsivos e wrapping; não é uma API geral de grid. textStyle/flowStyle/cardStyle ainda traduzem overrides editoriais antigos; o gerador de tokens foi removido, mas esses helpers podem ser reduzidos gradualmente.
+**Identity and editorial layout:** notice grids, fluid typography, proportions, backgrounds, and network positioning remain in Lume CSS. MStack supports responsive stacks and wrapping; it is not a general grid API. textStyle/flowStyle/cardStyle still translate older editorial overrides. The token generator was removed, but these helpers can be reduced gradually.
 
-**Dados e navegação:** AppDateInput converte strings do domínio em CivilDate/null e diferencia busca válida de rascunho. AppSelect traduz o contrato de escolha. RouterLink continua responsável pelo destino, histórico e query; Mavis renderiza os novos links. Não há necessidade de substituir o roteador.
+**Data and navigation:** AppDateInput converts domain strings to CivilDate/null and distinguishes valid search input from drafts. AppSelect adapts the selection contract. RouterLink still owns destinations, history, and query parameters; Mavis renders the new links. There is no need to replace the router.
 
-**Foco de ações específicas:** o detalhe ainda mantém a preparação de foco dos gatilhos de seus diálogos. A correção embutida de calendário não equivale a remover essa composição de todos os diálogos da aplicação.
+**Action-specific focus:** the detail page still prepares focus for its dialog triggers. The built-in calendar fix does not eliminate this composition from every application dialog.
 
-## Lista revisada de possibilidades upstream
+## Updated upstream opportunities
 
 ### Mavis
 
-- **MStack.responsive no Safari:** a troca de direção dentro da observação de tamanho reproduziu `ResizeObserver loop completed with undelivered notifications`. Nesta entrega usamos MStack com wrapping e bases flexíveis estáveis, preservando a adaptação móvel sem silenciar erros do navegador. A atualização de layout do breakpoint precisa evitar esse ciclo no Mavis.
-- Grid responsivo é diferente de MStack. Um contrato de grid poderia substituir parte das grades editoriais se houver demanda comum entre consumidores.
-- Um padrão geral de gatilho/diálogo pode eliminar a preparação de foco restante nas ações do detalhe.
-- Mais receitas e parâmetros compartilhados de movimento podem reduzir números repetidos. Entrada, saída e press já possuem tokens; não devem ser listados como ausentes.
+- **MStack.responsive in Safari:** changing direction during size observation reproduced `ResizeObserver loop completed with undelivered notifications`. This delivery uses MStack wrapping and stable flex bases, preserving mobile adaptation without suppressing browser errors. Breakpoint layout updates need to avoid this cycle in Mavis.
+- Responsive grids differ from MStack. A grid contract could replace some editorial grids if consumers share that need.
+- A general trigger/dialog pattern could remove the remaining focus preparation in detail-page actions.
+- Additional shared motion recipes and parameters could reduce repeated values. Entrance, exit, and press tokens already exist and should not be listed as missing.
 
-Links em Button/Card, tokens públicos, altura do Reveal, rascunho textual de DatePicker e prontidão do calendário saíram da lista de lacunas.
+Button/Card links, public tokens, Reveal height animation, DatePicker text drafts, and calendar readiness have been removed from the gap list.
 
 ### Jolt Web
 
-Desenho de caminhos SVG saiu da lista: drawPath já está no RC.8 e em uso. animateSize, animateLayout, animateItems, viewport, pointerFollow, timelines, estados e scopes também estão disponíveis. Não foi identificada uma nova capacidade obrigatória do motor para concluir esta entrega.
+SVG path drawing is no longer a gap: drawPath is available in RC.8 and is in use. animateSize, animateLayout, animateItems, viewport, pointerFollow, timelines, states, and scopes are also available. No additional mandatory engine capability was identified for this delivery.
 
-Limites de contrato continuam relevantes: drawPath desenha um contorno contínuo por alvo, não faz morphing de geometria; composição SVG é específica de Web. Esses limites não impedem a rede atual e não são pedidos automáticos de implementação.
+Contract boundaries still matter: drawPath draws one continuous contour per target and does not morph geometry; SVG composition is specific to Web. These boundaries do not prevent the current network experience and do not automatically constitute feature requests.
 
-## Verificação
+## Verification
 
-Build/tipos, domínio, HTTP/SSR e auditoria de controles. Playwright cobre Chromium, Firefox e WebKit: links reais/teclado, troca rápida de cidades, redimensionamento, movimento reduzido, layout móvel, Reveal, datas parciais, hidratação e todos os fluxos anteriores. Axe cobre as páginas e o calendário.
+Build/type checks, domain tests, HTTP/SSR checks, and the control audit are covered. Playwright exercises Chromium, Firefox, and WebKit: real links and keyboard navigation, rapid city changes, resizing, reduced motion, mobile layout, Reveal, partial dates, hydration, and existing workflows. Axe covers pages and the calendar.
 
-Nos testes de rotação/expiração, apenas Date é fixado: timers e o relógio de documento/WAAPI permanecem reais, para não misturar um relógio de animação real com performance/RAF artificialmente adiantados. A espera observa o resultado do intervalo real e o término da transição.
+Rotation and expiration tests fix only Date. Timers and the document/WAAPI clock remain real, avoiding a real animation clock combined with artificially advanced performance/RAF. Assertions wait for the actual interval result and transition completion.
