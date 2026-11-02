@@ -1,0 +1,15 @@
+node_modules
+.nuxt
+.output
+dist
+.git
+test-results
+playwright-report
+AGENT.md
+AGENTS.md
+**/AGENT.md
+**/AGENTS.md
+.env
+.env.*
+*.log
+.DS_Store

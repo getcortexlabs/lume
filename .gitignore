@@ -1,0 +1,18 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+.DS_Store
+
+.nuxt/
+.output/
+
+# Local agent instructions must never be published.
+AGENT.md
+AGENTS.md
+
+# Local configuration and credentials.
+.env
+.env.*
+!.env.example
+*.log

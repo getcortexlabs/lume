@@ -1,0 +1,243 @@
+.preview-label {
+  font-size: 10px;
+  --copy-size: 10px;
+  letter-spacing: 1.5px;
+  --copy-tracking: 1.5px;
+  color: #546546;
+  --copy-color: #546546;
+}
+.screen-mode > .preview-label,
+.screen-mode > p {
+  color: #d2ddc7;
+  --copy-color: #d2ddc7;
+}
+.network-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--line);
+  --card-border: 1px solid var(--line);
+  border-radius: 18px;
+  --card-radius: 18px;
+  overflow: hidden;
+}
+.network-config {
+  padding: 38px;
+  --card-padding: 38px;
+}
+.network-config h2 {
+  margin: 15px 0 20px;
+}
+.network-config > p {
+  font-size: 13px;
+  --copy-size: 13px;
+}
+
+.network-benefit {
+  display: flex;
+  gap: 12px;
+  --flow-gap: 12px;
+  margin: 28px 0;
+}
+.network-benefit strong {
+  font-size: 13px;
+  --copy-size: 13px;
+}
+.network-benefit p {
+  font-size: 12px;
+  --copy-size: 12px;
+  margin: 5px 0;
+}
+.config-details {
+  margin: 20px 0;
+  font-size: 12px;
+  --copy-size: 12px;
+}
+.config-details summary {
+  cursor: pointer;
+}
+.config-details pre {
+  white-space: pre-wrap;
+  background: #edf0e8;
+  --card-surface: #edf0e8;
+  padding: 16px;
+  --card-padding: 16px;
+  border-radius: 8px;
+  --card-radius: 8px;
+  font-size: 11px;
+  --copy-size: 11px;
+}
+.widget-stage {
+  background: #e9eee3;
+  --card-surface: #e9eee3;
+  padding: 30px 50px;
+  --card-padding: 30px 50px;
+  display: flex;
+  align-items: center;
+  --flow-align: center;
+  justify-content: center;
+  --flow-justify: center;
+  flex-direction: column;
+  --flow-direction: column;
+  gap: 20px;
+  --flow-gap: 20px;
+}
+.partner-widget {
+  background: #fff;
+  --card-surface: #fff;
+  border: 1px solid #d8e0ce;
+  --card-border: 1px solid #d8e0ce;
+  border-radius: 13px;
+  --card-radius: 13px;
+  width: 100%;
+  max-width: 320px;
+  box-shadow: 0 15px 30px #253c2010;
+  overflow: hidden;
+}
+.widget-top {
+  display: flex;
+  align-items: center;
+  --flow-align: center;
+  justify-content: space-between;
+  --flow-justify: space-between;
+  padding: 18px;
+  --card-padding: 18px;
+}
+.widget-top strong {
+  font-size: 24px;
+  --copy-size: 24px;
+  letter-spacing: -1.5px;
+  --copy-tracking: -1.5px;
+}
+.widget-top strong span {
+  font-size: 20px;
+  --copy-size: 20px;
+  color: #7a983e;
+  --copy-color: #7a983e;
+  margin-left: 4px;
+}
+.widget-top > span {
+  font-size: 10px;
+  --copy-size: 10px;
+  color: #6c7b61;
+  --copy-color: #6c7b61;
+}
+.widget-info {
+  padding: 22px;
+  --card-padding: 22px;
+}
+.widget-info .eyebrow {
+  font-size: 10px;
+  --copy-size: 10px;
+  letter-spacing: 1px;
+  --copy-tracking: 1px;
+}
+.widget-info h2 {
+  font-family: inherit;
+  font-size: 23px;
+  --copy-size: 23px;
+  font-weight: 600;
+  --copy-weight: 600;
+  margin: 10px 0;
+  letter-spacing: -0.7px;
+  --copy-tracking: -0.7px;
+}
+.widget-info p {
+  font-size: 11px;
+  --copy-size: 11px;
+}
+.widget-info .button-link {
+  font-size: 11px;
+  --copy-size: 11px;
+  min-height: 40px;
+  padding: 11px 16px;
+  --card-padding: 11px 16px;
+  width: 100%;
+}
+.widget-footer {
+  display: flex;
+  align-items: center;
+  --flow-align: center;
+  justify-content: space-between;
+  --flow-justify: space-between;
+  gap: 10px;
+  --flow-gap: 10px;
+  border-top: 1px solid var(--line);
+  padding: 10px 18px;
+  --card-padding: 10px 18px;
+  font-size: 10px;
+  --copy-size: 10px;
+  color: #697660;
+  --copy-color: #697660;
+  min-height: 49px;
+}
+.screen-mode {
+  background: #253e32;
+  --card-surface: #253e32;
+}
+.screen-mode .partner-widget {
+  max-width: 400px;
+  border: 8px solid #142a20;
+  --card-border: 8px solid #142a20;
+  border-radius: 9px;
+  --card-radius: 9px;
+}
+@media (max-width: 1100px) {
+  .network-config {
+    padding: 28px;
+    --card-padding: 28px;
+  }
+}
+@media (max-width: 1100px) {
+  .widget-stage {
+    padding: 25px;
+    --card-padding: 25px;
+  }
+}
+@media (max-width: 760px) {
+  .network-layout {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 760px) {
+  .network-config {
+    padding: 25px;
+    --card-padding: 25px;
+  }
+}
+@media (max-width: 760px) {
+  .widget-stage {
+    padding: 30px;
+    --card-padding: 30px;
+  }
+}
+@media (max-width: 760px) {
+  .network-config h2 {
+    font-size: 29px;
+    --copy-size: 29px;
+  }
+}
+@media (max-width: 760px) {
+  .network-config > .m-button {
+    font-size: 12px !important;
+    --copy-size: 12px;
+    width: 100%;
+  }
+}
+@media (max-width: 760px) {
+}
+@media (max-width: 760px) {
+  .network-config > .eyebrow {
+    font-size: 10px;
+    --copy-size: 10px;
+  }
+}
+.partner-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+@media (max-width: 900px) {
+  .partner-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "lume-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev --host 127.0.0.1 --port 5190",
+    "build": "nuxt typecheck && nuxt build",
+    "preview": "nuxt preview --host 127.0.0.1 --port 4188",
+    "test": "npm run test:domain",
+    "test:domain": "node scripts/test-domain.mjs && node scripts/test-workflows.mjs && node scripts/test-operations.mjs && node scripts/test-pilot.mjs",
+    "test:e2e": "playwright test",
+    "test:render": "node scripts/check-render.mjs",
+    "audit:ui": "node scripts/audit-mavis.mjs",
+    "start": "node .output/server/index.mjs",
+    "postinstall": "nuxt prepare",
+    "test:ssr": "playwright test tests/ssr.spec.ts"
+  },
+  "dependencies": {
+    "@getcortexlabs/mavis-core": "0.1.0-alpha.6",
+    "@getcortexlabs/mavis-web": "0.1.0-alpha.6",
+    "@rafaelaugusto/jolt": "0.1.0-rc.8",
+    "nuxt": "4.6.3",
+    "qrcode": "1.5.4",
+    "vue": "3.5.44",
+    "vue-router": "5.4.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1",
+    "@types/qrcode": "1.5.6",
+    "@vue/compiler-dom": "3.5.44",
+    "@vue/compiler-sfc": "3.5.44",
+    "esbuild": "0.28.2",
+    "typescript": "6.0.3",
+    "vue-tsc": "3.3.13"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

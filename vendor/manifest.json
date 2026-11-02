@@ -1,0 +1,26 @@
+{
+  "repository": "https://github.com/getcortexlabs/mavis-ui",
+  "commit": "81b6b6b6e6576511755d6ee5a5943d9bcd66e09d",
+  "tag": "v0.1.0-alpha.6",
+  "release": true,
+  "registry": "https://registry.npmjs.org/",
+  "jolt": "0.1.0-rc.8",
+  "packages": [
+    {
+      "name": "@getcortexlabs/mavis-core",
+      "version": "0.1.0-alpha.6",
+      "integrity": "sha512-wpy41cMljmt4uc5xtZmj30N+tyFOWsA4gqrg6akdcoh8xDZmrK7JI2gXES1YdTKEvLhPrqKeQCZiVLgquWw2Ag=="
+    },
+    {
+      "name": "@getcortexlabs/mavis-web",
+      "version": "0.1.0-alpha.6",
+      "integrity": "sha512-6hVjAZuPHoZNN4CCU7Zke3fm8OzY1TgurCGiHeoubDah1xe/N6j1hVIKfByRWpdV7HTfv4Fwmhq5suLI2eWOBg=="
+    },
+    {
+      "name": "@rafaelaugusto/jolt",
+      "version": "0.1.0-rc.8",
+      "integrity": "sha512-3vObAlKWnOyUvVSaIN75igIXM9+jCjnePr97tfN4xhQjMcrDZcx2x8V424GCwAjP6YA8VfgzI50XoTFD5rSSnw=="
+    }
+  ],
+  "verification": "Exact npm versions installed. Integrity and registry URLs recorded in package-lock.json. Release tag verified via GitHub API."
+}

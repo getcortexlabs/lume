@@ -1,0 +1,553 @@
+/* Lume's editorial composition. Controls and interaction surfaces remain Mavis. */
+.home-experience {
+  --editorial-paper: #f3f1e9;
+  --editorial-ink: #21382d;
+  background: var(--editorial-paper);
+}
+.hero-stage {
+  position: relative;
+  overflow: clip;
+  color: var(--editorial-ink);
+}
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.22fr 1fr;
+  gap: 0 76px;
+  align-items: center;
+  padding-top: 52px;
+}
+.hero-copy {
+  --hero-size: clamp(76px, 7.5vw, 110px);
+  position: relative;
+  min-width: 0;
+  padding: 8px 0 25px;
+}
+.hero-copy .eyebrow {
+  color: #3c5038;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+}
+.light-dot {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  background: #547132;
+  border-radius: 50%;
+}
+.hero-title {
+  font:
+    650 var(--hero-size)/0.98 "Avenir Next",
+    Avenir,
+    "Segoe UI",
+    sans-serif;
+  letter-spacing: -0.075em;
+  color: var(--editorial-ink);
+  position: relative;
+  margin: 29px 0 34px;
+}
+.hero-line {
+  display: block;
+  overflow: clip;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.hero-line > span {
+  display: block;
+  transform-origin: left bottom;
+}
+.hero-line-light {
+  position: relative;
+}
+.hero-period {
+  color: #547132;
+}
+.hero-underline {
+  position: absolute;
+  width: 85%;
+  height: 25px;
+  bottom: -14px;
+  left: -2px;
+  color: #a7cc61;
+  pointer-events: none;
+}
+.hero-description p {
+  color: #52614e;
+  max-width: 370px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.hero-actions {
+  margin-top: 28px;
+}
+.hero .hero-primary {
+  --m-button-background: #263e30;
+  --m-button-color: #fff;
+  --m-button-radius: 3px;
+  --m-button-padding-x: 24px;
+  --m-button-padding-y: 17px;
+  --m-button-font-size: 13px;
+}
+.hero .hero-secondary {
+  --m-button-radius: 3px;
+  --m-button-padding-x: 0px;
+  --m-button-font-size: 12px;
+}
+.hero-footnote {
+  --flow-gap: 8px;
+  --flow-align: center;
+  color: #53614e;
+  font-size: 10px;
+  margin-top: 24px;
+}
+.hero-baseline {
+  grid-column: 1/-1;
+  --flow-justify: space-between;
+  --flow-align: center;
+  --flow-gap: 16px;
+  border-top: 1px solid #c6cebd;
+  margin-top: 40px;
+  padding: 24px 0;
+  font-family: monospace;
+  font-size: 9px;
+  color: #526047;
+  letter-spacing: 0.6px;
+}
+.hero-baseline a {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  font-family: inherit;
+  font-size: 10px;
+}
+.region-bar {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 32px 0;
+  border-top: 1px solid #c6cebd;
+  border-bottom: 1px solid #c6cebd;
+}
+.region-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #adbc96;
+  border-radius: 50%;
+  color: #456332;
+  flex-shrink: 0;
+}
+.region-kicker {
+  display: block;
+  --copy-size: 9px;
+  --copy-color: #526047;
+  --copy-tracking: 1.2px;
+  margin-bottom: 6px;
+}
+.region-bar strong {
+  font-size: 15px;
+  font-weight: 500;
+}
+.region-bar form {
+  display: flex;
+  align-items: end;
+  gap: 10px;
+  margin-left: auto;
+}
+.region-bar .m-button {
+  --m-button-radius: 3px;
+  --m-button-font-size: 12px;
+}
+.section-heading {
+  --flow-justify: space-between;
+  --flow-align: end;
+  --flow-gap: 24px;
+}
+.section-heading h2 {
+  margin-top: 22px;
+}
+.section-heading > .text-link {
+  white-space: nowrap;
+  padding-bottom: 7px;
+  border-bottom: 1px solid #9bab86;
+}
+.section-heading > p {
+  max-width: 270px;
+  font-size: 14px;
+  margin: 0;
+}
+.recent-cases {
+  padding-top: 85px;
+  padding-bottom: 82px;
+  scroll-margin-top: 30px;
+}
+.recent-cases .eyebrow,
+.care-section .eyebrow {
+  --copy-size: 10px;
+  --copy-tracking: 1px;
+  --copy-color: #526047;
+}
+.recent-cases .section-heading h2 {
+  --copy-size: clamp(34px, 3.5vw, 49px);
+  --copy-leading: 1.12;
+  --copy-tracking: -1.7px;
+}
+.recent-cases .section-heading h2 em {
+  --copy-color: #526e39;
+}
+.section-description {
+  --copy-size: 13px;
+  margin: 20px 0 34px;
+}
+.home-experience .case-grid {
+  gap: 24px;
+}
+/* Entrances only translate; a fixed pivot survives breakpoint size changes. */
+.home-experience .case-item,
+.home-experience .care-step {
+  transform-origin: 0 0;
+}
+.home-experience .recent-cases .case-card {
+  --card-radius: 2px;
+  --card-border: 1px solid #cdd4c3;
+  --card-surface: #faf9f4;
+}
+.home-experience .recent-cases .case-card:hover {
+  box-shadow: 6px 6px 0 #d5ddc8;
+}
+.home-experience .recent-cases .person-art {
+  height: 246px;
+}
+.home-experience .recent-cases .case-card h3 {
+  --copy-size: 18px;
+  --copy-weight: 600;
+}
+.home-experience .recent-cases .case-card-body {
+  --card-padding: 25px 19px 20px;
+}
+.home-experience .recent-cases .case-demo {
+  --card-radius: 0px;
+  --card-surface: #faf9f4;
+  --copy-size: 9px;
+}
+.disclosure {
+  --flow-gap: 8px;
+  --flow-align: center;
+  --flow-justify: start;
+  color: #55614b;
+  font-size: 11px;
+  margin-top: 25px;
+}
+.disclosure [data-mavis-text] {
+  --copy-color: inherit;
+  --copy-size: inherit;
+}
+.care-section {
+  background: #e0e8ce;
+  padding: 72px 0 80px;
+  border-block: 1px solid #bdcba6;
+}
+.care-section .section-heading h2 {
+  --copy-size: clamp(34px, 4vw, 52px);
+  max-width: 650px;
+}
+.care-grid {
+  margin-top: 48px;
+}
+.care-card {
+  position: relative;
+}
+.care-card > .m-icon {
+  color: #405b2e;
+}
+.care-card h3 {
+  margin: 34px 0 13px;
+}
+.care-card p {
+  font-size: 13px;
+  max-width: 300px;
+  color: #4e5f40;
+}
+.care-card .text-link {
+  font-size: 12px;
+}
+.step-number {
+  position: absolute;
+  top: 18px;
+  right: 12px;
+}
+.mission-section {
+  position: relative;
+  overflow: clip;
+  background: #243e30;
+  color: #f3f1e9;
+  padding: 80px 0 0;
+}
+.mission-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 28px;
+}
+.mission-heading .eyebrow {
+  --copy-color: #d3e1bd;
+  --copy-size: 9px;
+  --copy-tracking: 1.3px;
+}
+.mission-heading p {
+  max-width: 330px;
+  color: #d6e0cc;
+  font-size: 14px;
+}
+.kindness-title {
+  font:
+    650 clamp(54px, 8.8vw, 128px)/0.98 "Avenir Next",
+    Avenir,
+    "Segoe UI",
+    sans-serif;
+  letter-spacing: -0.065em;
+  color: #f3f1e9;
+  margin: 48px 0 42px;
+}
+.kindness-line {
+  display: block;
+}
+.kindness-line.indented {
+  padding-left: 14%;
+  color: #d1ed91;
+}
+.mission-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding-bottom: 70px;
+}
+.mission-bottom .text-link {
+  color: #e8f2da;
+  border-bottom: 1px solid #91a67c;
+  padding-bottom: 12px;
+}
+.mission-bottom > span {
+  font: 10px monospace;
+  color: #c6d6b4;
+}
+.mission-ribbon {
+  border-top: 1px solid #a4bc8140;
+  padding: 23px 0;
+  overflow: clip;
+}
+.mission-ribbon-copy {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 35px;
+  font:
+    600 clamp(28px, 4vw, 50px)/1.1 "Avenir Next",
+    sans-serif;
+  letter-spacing: -0.03em;
+  color: #bdd3a2;
+}
+.mission-ribbon-copy span {
+  white-space: nowrap;
+}
+.mission-ribbon-copy i {
+  font-style: normal;
+  font-size: 0.6em;
+  color: #d1ed91;
+}
+@media (min-width: 1600px) {
+  .hero {
+    padding-top: 70px;
+  }
+}
+@media (max-width: 1100px) {
+  .hero {
+    gap: 0 35px;
+  }
+  .hero-copy {
+    --hero-size: clamp(65px, 7.8vw, 88px);
+  }
+  .hero-actions {
+    gap: 12px;
+  }
+  .hero .hero-primary {
+    --m-button-padding-x: 15px;
+    --m-button-font-size: 12px;
+  }
+  .home-experience .case-grid {
+    gap: 15px;
+  }
+  .home-experience .recent-cases .person-art {
+    height: 205px;
+  }
+}
+@media (max-width: 900px) and (min-width: 761px) {
+  .hero {
+    gap: 0 25px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .hero-copy {
+    --hero-size: 65px;
+  }
+  .hero-baseline > span:last-child {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 30px;
+  }
+  .hero-copy {
+    --hero-size: clamp(66px, 12.5vw, 88px);
+    padding-bottom: 12px;
+  }
+  .hero-copy .eyebrow {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+  .hero-title {
+    margin-top: 25px;
+    margin-bottom: 29px;
+  }
+  .hero-underline {
+    width: 76%;
+    height: 18px;
+    bottom: -10px;
+  }
+  .hero-description p {
+    font-size: 14px;
+    max-width: 350px;
+  }
+  .hero .hero-primary {
+    --m-button-padding-x: 18px;
+    --m-button-padding-y: 15px;
+  }
+  .hero-footnote {
+    font-size: 9px;
+    margin-top: 22px;
+  }
+  .hero-baseline {
+    margin-top: 28px;
+    padding: 20px 0;
+    --flow-justify: space-between;
+  }
+  .hero-baseline > span {
+    display: none;
+  }
+  .hero-baseline a {
+    justify-content: space-between;
+    width: 100%;
+  }
+  .region-bar {
+    flex-wrap: wrap;
+    gap: 13px;
+    padding: 25px 0;
+  }
+  .region-bar > div {
+    flex: 1;
+  }
+  .region-bar strong {
+    font-size: 13px;
+  }
+  .region-bar form {
+    width: 100%;
+    margin-top: 8px;
+  }
+  .region-bar .m-button {
+    --m-button-font-size: 11px;
+    --m-button-padding-x: 14px;
+    flex-shrink: 0;
+  }
+  .section-heading {
+    --flow-align: start;
+    --flow-wrap: wrap;
+    --flow-gap: 20px;
+  }
+  .recent-cases {
+    padding-block: 50px;
+  }
+  .recent-cases .section-heading h2 {
+    --copy-size: 35px;
+    --copy-tracking: -1.3px;
+  }
+  .section-heading > .text-link {
+    font-size: 12px;
+  }
+  .section-description {
+    --copy-size: 12px;
+    margin: 20px 0 27px;
+  }
+  .home-experience .case-grid {
+    gap: 16px;
+  }
+  .home-experience .recent-cases .person-art {
+    height: 182px;
+  }
+  .home-experience .recent-cases .case-card h3 {
+    --copy-size: 16px;
+  }
+  .disclosure {
+    --flow-align: start;
+    font-size: 10px;
+  }
+  .care-section {
+    padding-block: 45px;
+  }
+  .care-section .section-heading h2 {
+    --copy-size: 36px;
+  }
+  .care-grid {
+    margin-top: 30px;
+  }
+  .care-card p {
+    max-width: none;
+  }
+  .mission-section {
+    padding-top: 42px;
+  }
+  .mission-heading {
+    flex-direction: column;
+    gap: 18px;
+  }
+  .mission-heading p {
+    font-size: 13px;
+    margin: 0;
+  }
+  .kindness-title {
+    font-size: clamp(49px, 11.5vw, 78px);
+    margin-block: 36px;
+  }
+  .kindness-line.indented {
+    padding-left: 7%;
+  }
+  .mission-bottom {
+    align-items: start;
+    flex-direction: column;
+    padding-bottom: 40px;
+    gap: 23px;
+  }
+  .mission-ribbon {
+    padding-block: 20px;
+  }
+  .mission-ribbon-copy {
+    gap: 22px;
+  }
+}
+@media (max-width: 360px) {
+  .hero-copy {
+    --hero-size: 59px;
+  }
+  .hero .hero-primary {
+    --m-button-padding-x: 13px;
+  }
+  .hero .hero-secondary {
+    --m-button-font-size: 11px;
+  }
+  .kindness-title {
+    font-size: 45px;
+  }
+}

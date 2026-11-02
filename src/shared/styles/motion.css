@@ -1,0 +1,52 @@
+:root {
+  --lume-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --lume-duration-fast: 180ms;
+  --lume-duration-scene: 420ms;
+}
+.case-grid {
+  position: relative;
+}
+.case-link {
+  display: block;
+  min-width: 0;
+}
+.case-card {
+  height: 100%;
+}
+.case-link .case-arrow {
+  transition:
+    background-color 180ms,
+    color 180ms,
+    rotate 220ms var(--lume-ease-out);
+}
+.case-link:hover .case-arrow {
+  background: var(--m-color-accent);
+  color: var(--m-color-text);
+  rotate: 10deg;
+}
+.m-input-editor {
+  transition:
+    border-color 180ms,
+    box-shadow 180ms;
+}
+.mobile-navigation a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 12px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.case-item { min-width: 0; }
+
+.case-entrance { height: 100%; }

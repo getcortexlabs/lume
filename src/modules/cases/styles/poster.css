@@ -1,0 +1,154 @@
+.poster-page {
+  max-width: 1000px;
+}
+.poster-controls {
+  margin-bottom: 32px;
+}
+.case-poster {
+  background: white;
+  border: 1px solid var(--line);
+  padding: 40px;
+  overflow-wrap: anywhere;
+  color: var(--ink);
+}
+.poster-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 20px;
+}
+.poster-brand strong {
+  font-size: 48px;
+  letter-spacing: -3px;
+}
+.poster-brand span {
+  font-family: var(--serif);
+  font-size: 20px;
+}
+.poster-demo {
+  border-block: 2px solid var(--forest);
+  padding: 12px 0;
+  font-size: 11px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+.poster-body {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 28px;
+  margin-block: 28px;
+}
+.poster-body h1 {
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1.1;
+}
+.poster-profile .person-artwork {
+  width: 100%;
+  aspect-ratio: 1;
+}
+.poster-profile small {
+  display: block;
+  font-size: 11px;
+  margin-top: 10px;
+}
+.poster-description {
+  padding-bottom: 24px;
+}
+.poster-current {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 24px;
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+  align-items: center;
+}
+.poster-qr {
+  width: 140px;
+  height: 140px;
+}
+.poster-current p {
+  font-size: 13px;
+  margin: 8px 0;
+}
+.poster-current a {
+  font-size: 12px;
+  text-decoration: underline;
+}
+.poster-current .poster-local {
+  font-size: 10px;
+}
+@media (max-width: 600px) {
+  .case-poster {
+    padding: 20px;
+  }
+  .poster-brand {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .poster-body {
+    grid-template-columns: 1fr;
+  }
+  .poster-profile {
+    max-width: 180px;
+  }
+  .poster-current {
+    grid-template-columns: 1fr;
+  }
+}
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+  body:has(.poster-page) .site-header,
+  body:has(.poster-page) .demo-strip,
+  body:has(.poster-page) .site-footer,
+  body:has(.poster-page) .skip-link,
+  .poster-controls {
+    display: none !important;
+  }
+  body:has(.poster-page),
+  body:has(.poster-page) .app-shell {
+    background: white !important;
+  }
+  .poster-page {
+    width: 100% !important;
+    max-width: none;
+    padding: 0 !important;
+  }
+  .case-poster {
+    border: 0;
+    padding: 0;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .poster-brand {
+    flex-direction: row;
+    align-items: center;
+  }
+  .poster-body {
+    grid-template-columns: 160px 1fr;
+    gap: 24px;
+    margin-block: 20px;
+  }
+  .poster-body h1 {
+    font-size: 34px;
+  }
+  .poster-current {
+    grid-template-columns: 120px 1fr;
+  }
+  .poster-qr {
+    width: 120px;
+    height: 120px;
+  }
+  .case-poster p {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .poster-current,
+  .poster-body {
+    break-inside: avoid;
+  }
+}

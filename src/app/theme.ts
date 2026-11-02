@@ -1,0 +1,100 @@
+import { defineTheme } from "@getcortexlabs/mavis-web";
+export const lumeTheme = defineTheme({
+  name: "lume",
+  appearance: "light",
+  colors: {
+    background: "#f8f9f5",
+    surface: "#ffffff",
+    elevated: "#edf1e9",
+    text: "#233d31",
+    muted: "#58664f",
+    primary: "#19392f",
+    onPrimary: "#ffffff",
+    primarySoft: "#edf3e4",
+    accent: "#c7ee8e",
+    onAccent: "#19392f",
+    accentSoft: "#f0f6e6",
+    border: "#dce2d8",
+    success: "#316647",
+    danger: "#a23939",
+  },
+  typography: {
+    display: {
+      fontFamily:
+        '"Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif',
+      lineHeight: 1.02,
+      fontSize: 56,
+      fontWeight: "500",
+      letterSpacing: -0.04,
+    },
+    title: {
+      fontFamily:
+        '"Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif',
+      lineHeight: 1.2,
+      fontSize: 34,
+      fontWeight: "500",
+      letterSpacing: -0.035,
+    },
+    heading: {
+      fontFamily: '"Avenir Next", Avenir, "Segoe UI", sans-serif',
+      lineHeight: 1.3,
+      fontSize: 18,
+      fontWeight: "600",
+      letterSpacing: -0.02,
+    },
+    body: {
+      fontFamily: '"Avenir Next", Avenir, "Segoe UI", sans-serif',
+      lineHeight: 1.75,
+      fontSize: 14,
+      fontWeight: "normal",
+      letterSpacing: 0,
+    },
+    caption: {
+      fontFamily: '"Avenir Next", Avenir, "Segoe UI", sans-serif',
+      lineHeight: 1.3,
+      fontSize: 12,
+      fontWeight: "normal",
+      letterSpacing: 0,
+    },
+    overline: {
+      fontFamily: '"Avenir Next", Avenir, "Segoe UI", sans-serif',
+      lineHeight: 1.3,
+      fontSize: 10,
+      fontWeight: "600",
+      letterSpacing: 0.16,
+    },
+  },
+  motion: {
+    pressScale: 0.975,
+    pressDuration: 140,
+    releaseDuration: 340,
+    releaseBounce: 0.12,
+    enterDuration: 360,
+    exitDuration: 220,
+    enterOffset: 14,
+    ease: "easeOut",
+  },
+  radius: { sm: 8, md: 10, lg: 18 },
+  control: { md: { height: 48, fontSize: 14, padding: 20 } },
+});
+
+export const lumeNightTheme = defineTheme(
+  {
+    name: "lume-night",
+    appearance: "dark",
+    colors: {
+      background: "#142d22",
+      surface: "#1c3628",
+      elevated: "#294331",
+      text: "#f6f5e9",
+      muted: "#b4c2ad",
+      primary: "#c7ee8e",
+      onPrimary: "#19392f",
+      primarySoft: "#294331",
+      accent: "#c7ee8e",
+      onAccent: "#19392f",
+      border: "#465b3d",
+    },
+  },
+  lumeTheme,
+);

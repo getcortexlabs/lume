@@ -1,0 +1,120 @@
+import type { ReviewCase } from "../domain/case";
+export function createFixtures(): ReviewCase[] {
+  const entries = [
+    [
+      "ana-lucia",
+      "Ana Lúcia Ferreira",
+      62,
+      "São Paulo",
+      "Vila Mariana",
+      "2026-10-24",
+      "AL",
+      "sage",
+      "published",
+    ],
+    [
+      "marcos-oliveira",
+      "Marcos Oliveira",
+      34,
+      "Suzano",
+      "Centro",
+      "2026-10-26",
+      "MO",
+      "sand",
+      "published",
+    ],
+    [
+      "helena-costa",
+      "Helena Costa",
+      71,
+      "Guarulhos",
+      "Jardim Maia",
+      "2026-10-28",
+      "HC",
+      "rose",
+      "published",
+    ],
+    [
+      "pedro-almeida",
+      "Pedro Almeida",
+      28,
+      "São Paulo",
+      "Santana",
+      "2026-10-29",
+      "PA",
+      "blue",
+      "published",
+    ],
+    [
+      "beatriz-santos",
+      "Beatriz Santos",
+      42,
+      "Suzano",
+      "Jardim Revista",
+      "2026-10-30",
+      "BS",
+      "sage",
+      "in_review",
+    ],
+    [
+      "antonio-lima",
+      "Antônio Lima",
+      66,
+      "Guarulhos",
+      "Centro",
+      "2026-10-27",
+      "AT",
+      "sand",
+      "in_review",
+    ],
+  ] as const;
+  return entries.map(
+    ([
+      id,
+      name,
+      age,
+      city,
+      neighborhood,
+      missingSince,
+      initials,
+      color,
+      status,
+    ]) => ({
+      id,
+      name,
+      age,
+      city,
+      neighborhood,
+      missingSince,
+      initials,
+      color,
+      status,
+      reviewedAt: "2026-11-01T12:00:00Z",
+      source: "Organização Horizonte · demonstração",
+      revision: 1,
+      description: `Neste exemplo fictício, ${name} foi vista por último na região de ${neighborhood}, em ${city}. As informações abaixo ilustram uma publicação autorizada e não correspondem a uma pessoa real.`,
+      clothing:
+        "Camiseta clara, calça azul e tênis. Informação fictícia para demonstração.",
+      suggestions: [
+        {
+          id: "municipality",
+          field: "city",
+          value: id === "antonio-lima" ? "São Paulo" : city,
+          quote: `Município: ${id === "antonio-lima" ? "São Paulo" : city}`,
+          conflict: id === "antonio-lima",
+        },
+      ],
+      evidence: `REGISTRO FICTÍCIO • DEMO-2026\n\nNome: ${name}\nIdade: ${age} anos\nMunicípio: ${city}\nRegião: ${neighborhood}\nData informada: ${missingSince}\n\nDivulgação solicitada para a região indicada. Fonte de demonstração, sem vínculo com ocorrência real.${id === "antonio-lima" ? "\n\nRegistro complementar fictício divergente:\nMunicípio: São Paulo" : ""}`,
+      history: [
+        {
+          action:
+            status === "published"
+              ? "Divulgação revisada"
+              : "Registro recebido para revisão",
+          at: "2026-11-01T12:00:00Z",
+          reason: "Registro fictício incluído na demonstração.",
+        },
+      ],
+    }),
+  );
+}

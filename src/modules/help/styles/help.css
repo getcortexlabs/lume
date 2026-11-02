@@ -1,0 +1,154 @@
+.help-page .page-heading {
+  max-width: 780px;
+}
+.urgent-note {
+  display: flex;
+  gap: 20px;
+  --flow-gap: 20px;
+  align-items: center;
+  --flow-align: center;
+  padding: 25px 30px;
+  --card-padding: 25px 30px;
+  border: 1px solid #d4dfc3;
+  --card-border: 1px solid #d4dfc3;
+  background: #edf2e3;
+  --card-surface: #edf2e3;
+  border-radius: 12px;
+  --card-radius: 12px;
+  margin-bottom: 38px;
+}
+.urgent-note h2 {
+  font-family: inherit;
+  font-size: 21px;
+  --copy-size: 21px;
+  font-weight: 600;
+  --copy-weight: 600;
+  letter-spacing: -0.5px;
+  --copy-tracking: -0.5px;
+  margin-bottom: 8px;
+}
+.urgent-note p {
+  margin: 0;
+  font-size: 13px;
+  --copy-size: 13px;
+}
+.urgent-note a {
+  font-weight: 700;
+  --copy-weight: 700;
+  text-decoration: underline;
+}
+.help-layout {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 70px;
+  --flow-gap: 70px;
+}
+.help-steps article {
+  display: flex;
+  gap: 23px;
+  --flow-gap: 23px;
+  padding: 25px 0;
+  --card-padding: 25px 0;
+  border-bottom: 1px solid var(--line);
+}
+.help-steps article > span {
+  font-family: var(--serif);
+  color: #626e59;
+  --copy-color: #626e59;
+  font-size: 25px;
+  --copy-size: 25px;
+}
+.help-steps h2 {
+  font-family: inherit;
+  font-size: 19px;
+  --copy-size: 19px;
+  font-weight: 600;
+  --copy-weight: 600;
+  letter-spacing: -0.5px;
+  --copy-tracking: -0.5px;
+  margin-bottom: 12px;
+}
+.help-steps p {
+  font-size: 14px;
+  --copy-size: 14px;
+  margin: 0;
+}
+.help-aside {
+  background: #eff2e9;
+  --card-surface: #eff2e9;
+  border-radius: 14px;
+  --card-radius: 14px;
+  padding: 30px;
+  --card-padding: 30px;
+  align-self: start;
+}
+.help-aside h3 {
+  margin: 22px 0 15px;
+  font-size: 21px;
+  --copy-size: 21px;
+  line-height: 1.4;
+  --copy-leading: 1.4;
+}
+.help-aside p {
+  font-size: 13px;
+  --copy-size: 13px;
+}
+.help-aside > strong {
+  font-size: 13px;
+  --copy-size: 13px;
+}
+.help-aside .text-link {
+  font-size: 12px;
+  --copy-size: 12px;
+  align-items: flex-start;
+  --flow-align: flex-start;
+}
+@media (max-width: 1100px) {
+  .help-layout {
+    gap: 35px;
+    --flow-gap: 35px;
+  }
+}
+@media (max-width: 760px) {
+  .help-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    --flow-gap: 30px;
+  }
+}
+@media (max-width: 760px) {
+  .urgent-note {
+    padding: 22px;
+    --card-padding: 22px;
+    align-items: flex-start;
+    --flow-align: flex-start;
+    gap: 15px;
+    --flow-gap: 15px;
+  }
+}
+@media (max-width: 760px) {
+  .urgent-note h2 {
+    font-size: 19px;
+    --copy-size: 19px;
+    line-height: 1.4;
+    --copy-leading: 1.4;
+  }
+}
+@media (max-width: 760px) {
+  .help-steps article {
+    gap: 16px;
+    --flow-gap: 16px;
+  }
+}
+@media (max-width: 760px) {
+  .help-steps h2 {
+    font-size: 17px;
+    --copy-size: 17px;
+  }
+}
+@media (max-width: 760px) {
+  .help-steps p {
+    font-size: 13px;
+    --copy-size: 13px;
+  }
+}

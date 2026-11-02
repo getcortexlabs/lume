@@ -1,0 +1,109 @@
+/* Responsive values are explicitly scoped to the component receiving them.
+   The actual rendering, semantics, controls and base theme belong to Mavis. */
+:where([data-mavis-text]) {
+  --copy-size: initial;
+  --copy-weight: initial;
+  --copy-tracking: initial;
+  --copy-leading: initial;
+  --copy-color: initial;
+  --copy-align: initial;
+  --copy-wrap: initial;
+}
+:where([data-mavis-flow]) {
+  --flow-gap: initial;
+  --flow-direction: initial;
+  --flow-align: initial;
+  --flow-justify: initial;
+  --flow-wrap: initial;
+}
+:where([data-mavis-card]) {
+  --card-padding: initial;
+  --card-surface: initial;
+  --card-border: initial;
+  --card-radius: initial;
+}
+.app-shell {
+  --ink: var(--m-color-text);
+  --muted: var(--m-color-muted);
+  --forest: var(--m-color-primary);
+  --lime: var(--m-color-accent);
+  --line: var(--m-color-border);
+  --paper: var(--m-color-background);
+}
+.lume-screen {
+  font-family: inherit;
+}
+.lume-screen > .route-surface {
+  width: 100%;
+}
+.m-sheet-panel {
+  font-family: inherit;
+}
+/* Inline Mavis defaults are overridden only through its public style interface. */
+.hero-footnote [data-mavis-text],
+.hero-baseline [data-mavis-text] {
+  --copy-color: inherit;
+  --copy-size: inherit;
+  --copy-tracking: inherit;
+}
+.queue-item[data-selected="true"] {
+  --queue-accent: #728f43;
+}
+.queue-summary {
+  min-width: 0;
+}
+.regional-select {
+  width: 230px;
+}
+
+.queue-heading .lume-select {
+  width: 100%;
+}
+.m-sheet-body > p {
+  margin-bottom: 0;
+}
+@media (max-width: 760px) {
+  .mobile-menu {
+    --mobile-menu-display: inline-flex;
+  }
+  .review-queue {
+    --flow-direction: row;
+  }
+  .queue-item {
+    border-left: 0;
+    --queue-accent: transparent;
+  }
+  .regional-select {
+    min-width: 0;
+    flex: 1 1 0%;
+  }
+}
+
+.lume-select {
+  min-width: 0;
+}
+.region-bar form {
+  align-items: flex-end;
+}
+.region-bar .regional-select {
+  width: 240px;
+}
+.region-bar .regional-select .m-select-trigger {
+  min-height: 48px;
+}
+.regional-select label {
+  font-size: 11px;
+}
+.recent-cases .section-heading h2 em {
+  display: block;
+}
+@media (max-width: 760px) {
+  .region-bar .regional-select {
+    width: auto;
+    min-width: 0;
+    flex: 1 1 0;
+  }
+  .region-bar .regional-select .m-select-trigger {
+    padding: 12px;
+  }
+}
