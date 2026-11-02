@@ -201,3 +201,9 @@ The hero combines a paper-colored background, large typography, and an interacti
 ## Mavis adoption
 
 See the [Mavis and Jolt adoption inventory and remaining gaps](docs/mavis-adoption.md). `npm run audit:ui` counts component usage and checks that native HTML controls are not introduced outside explicit adapters. This revision contains **27 Mavis component types and 624 static occurrences, with no custom native HTML controls**. AppDateInput adapts strings and drafts to Mavis date components; NativeDateInput was removed. These counts are not a percentage of application code. Lume's tagline is “Gentileza gera gentileza”.
+
+## Brand assets and link previews
+
+The document head declares the SVG favicon, a multi-resolution ICO fallback, and a 180px Apple touch icon. `public/favicon.svg` is the vector source for the derived icons. To regenerate them after changing the vector, run `node scripts/generate-icons.mjs` with Playwright Chromium installed.
+
+Open Graph and Twitter Card metadata use `public/brand/lume-social.png`, the supplied 1734 × 907 image, without edits. The preview uses the absolute production URL `https://lume.getcortexlabs.com/brand/lume-social.png`; update it in `nuxt.config.ts` if the public domain changes. Metadata is included in the initial HTML, including client-rendered routes. The preview is shared branding and contains no case-specific personal data. Social platforms must be able to fetch the deployed page and image; localhost is not publicly accessible.
