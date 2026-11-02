@@ -4,6 +4,7 @@ import { MButton, MCard, MColumn, MText } from "@getcortexlabs/mavis-web";
 import AppSelect from "../../../shared/ui/AppSelect.vue";
 import { cityOptions } from "../../cases/presentation/choices";
 import { usePreferences } from "../composables/usePreferences";
+import LocalDataControls from "../components/LocalDataControls.vue";
 const preferences = usePreferences();
 const { state, ready, message, systemReduced } = preferences;
 const region = computed({
@@ -95,6 +96,7 @@ const motion = computed({
       <RouterLink to="/cases" class="text-link"
         >Ver avisos e buscas salvas →</RouterLink
       >
+      <LocalDataControls />
     </MColumn>
   </section>
 </template>

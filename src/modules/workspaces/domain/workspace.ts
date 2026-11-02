@@ -16,5 +16,7 @@ export interface WorkspaceController {
   getState(): WorkspaceState;
   switchTo(id: string): void;
   reset(clearDrafts?: boolean): void;
+  localDraftCount(): number;
+  clearLocalDrafts(): void;
   subscribe(listener: () => void): () => void;
 }

@@ -25,6 +25,7 @@ npm run test:render  # HTTP responses, SSR content, and public data isolation
 npm run test:e2e     # Playwright journeys, hydration, responsive layouts, and axe
 npm run test:ssr     # HTML without JavaScript, concurrent requests, and pre-hydration edits
 npm run audit:ui     # Mavis adoption and native control audit
+npm run measure:performance # Resource sizes against a production server on port 5191
 ```
 
 To run browser tests on another machine, install Playwright browsers with `npx playwright install chromium firefox webkit`.
@@ -41,6 +42,9 @@ Routes use English: `/cases`, `/cases/:id`, `/guidance`, `/network`, and `/organ
 | `/guidance` | Initial guidance and an official reference |
 | `/network` | Regional widget and display previews with notice navigation |
 | `/preferences` | Preferred region, larger text, stronger contrast, and reduced motion |
+| `/sign-in` | Credential-free entry into the session demonstration |
+| `/session-expired` | Resume an expired demonstration session and its requested destination |
+| `/access-denied` | Public navigation or a simulated reviewer profile |
 | `/organization` | Review queue, evidence, simulated AI assistance, decisions, and history |
 | `/organization/cases/new` | Four-step intake, validation, simulated authorization, and public preview |
 | `/organization/drafts` | Drafts persisted in this browser |
@@ -62,13 +66,39 @@ The global Nuxt error page offers retry and a return home without displaying int
 
 The preference store is created per Nuxt application/request and reads browser storage after hydration. Mavis theme overrides supply control typography, contrast, and motion tokens. Jolt owns animation playback and disposal; Lume connects the local preference to those contracts. Editorial CSS complements the theme for custom reading text and responsive layouts.
 
+### Local data controls
+
+At `/preferences`, searches, preferences, and saved drafts have separate confirmation dialogs. Clearing preferences retains saved searches; clearing searches retains region and reading choices. Draft cleanup targets the named active organization and preserves other organizations, publication decisions, and the current simulation. Switch organizations using the provided link before deleting that organization's drafts. Canceling leaves everything intact. A failed storage write shows an error and does not claim deletion. Unreadable preference storage cannot be selectively cleared because the other category cannot be safely preserved.
+
+The controls affect this browser and origin, including other tabs sharing local storage. They do not erase data on another device or a future server. Existing editors cannot recreate a deleted draft under its old identifier; unsaved new drafts in another tab are not part of a cleanup of already-saved drafts.
+
+### Simulated sessions
+
+The prototype starts with an active demonstration session. Use **Sair da demonstração** in the organization context, or **Simular sessão expirada** and **Simular acesso negado** at `/organization/simulation`. Entry and recovery use `/sign-in`, `/session-expired`, and `/access-denied`; all explicitly describe the simulation and collect no credentials. Public routes stay accessible.
+
+Only a version and status are persisted in `sessionStorage`, independently per tab. The client plugin restores them before route middleware runs, including on direct navigation. A missing value starts the default demonstration; an unreadable value requests entry again. Storage failures are reported as page-only state. Internal sign-out lets the existing editor leave guard save or cancel first. Return destinations are restricted to same-origin organization routes and preserve their query. Choosing the reviewer profile restores the simulated reviewer permission. This is navigation behavior, not authentication or server authorization; the future backend must enforce identity, sessions, and access independently.
+
+### Measured asset performance
+
+The brand now uses responsive WebP sources at 480, 960, and 1536 pixels, with explicit display sizes and asynchronous decoding. The supplied PNG remains the source artwork; the social preview is unchanged. Regenerate the assets with `node scripts/optimize-brand.mjs` when `cwebp` is installed. Encoding is lossless after resizing; the full-size variant retains the source dimensions.
+
+Production measurements on localhost at 390 × 844, DPR 1, with a fresh browser page per route and a 1.2-second observation window:
+
+| Route | Resource bytes before | Resource bytes after | Reduction |
+| --- | ---: | ---: | ---: |
+| `/` | 1,854,785 | 1,094,396 | 41.0% |
+| `/cases` | 1,847,424 | 1,087,028 | 41.2% |
+| `/organization` | 1,854,078 | 1,093,667 | 41.0% |
+
+These are decoded resource-body bytes, including fonts, scripts, CSS, and images; they exclude the HTML document and do not measure compressed transfer, real-user latency, or a Lighthouse score. Image bytes dropped from 823,168 to 57,626 in this profile. Higher-density screens select larger variants. The home JavaScript grew by 5,153 bytes with the new session/data features, already included in the net reduction above. Run `LUME_TEST_URL=http://127.0.0.1:5191 npm run measure:performance` against a running production build to reproduce the method. Mavis' full icon font and global component plugin remain significant shared costs; this delivery does not replace their supported contracts with private imports or fork the library.
+
 In the review queue, Antônio Lima has a fictional conflict between sources. Correct the field or accept an evidence-backed suggestion before publishing. Possible duplicates are suggested using names or municipalities, similar ages, and nearby dates; records are never merged automatically. New submissions start with manual review.
 
 For a shorter demonstration, open `/organization`, select Beatriz Santos, provide a reason, confirm the review, and approve publication. The notice appears in search and the network preview. Withdraw it with a new reason to remove it from both. The mock blocks republication and rejects decisions based on stale revisions.
 
 In the public experience, filter and sort at `/cases`, open a notice, and return to the previous search. Context stays in the URL and survives reloads. Each filter chip can be removed independently. Sorting distinguishes recent review, recent disappearance, and name. Sharing opens an explicitly fictional preview with copyable text and a link. The shared link excludes search parameters. If clipboard access is denied, the fields support manual selection. No messages are sent to external services.
 
-Drafts are saved automatically in `localStorage` and shared between tabs on the same origin, with revision checks. Publication decisions, history, and partners remain in memory and reset on reload. The organization area is an unrestricted demonstration without authentication. It accepts no real tips, submissions, or documents. There are no AI calls, crawlers, external APIs, external notifications, external synchronization, or location collection. Views communicate with mocks through a simulated local HTTP transport. The configurator at `/organization/displays` generates working embed code for local examples; it does not synchronize separate application instances.
+Drafts are saved automatically in `localStorage` and shared between tabs on the same origin, with revision checks. Publication decisions, history, and partners remain in memory and reset on reload. The organization area has a client-side session demonstration without real authentication. It accepts no real tips, submissions, or documents. There are no AI calls, crawlers, external APIs, external notifications, external synchronization, or location collection. Views communicate with mocks through a simulated local HTTP transport. The configurator at `/organization/displays` generates working embed code for local examples; it does not synchronize separate application instances.
 
 ## Guided pilot, organizations, and distribution
 
@@ -201,7 +231,7 @@ To serve the SSR build locally, run `HOST=0.0.0.0 PORT=3000 npm start` after `np
 
 Nuxt, Jolt, and Mavis packages come from the npm registry. The lockfile was generated by npm. There are no runtime aliases or links to neighboring repositories.
 
-Validation on November 2, 2026 covered **68 scenarios across Chromium, Firefox, and WebKit**. The full run recorded 201 passing executions, two clipboard skips outside Chromium, and one WebKit failure reporting an access-control error while fetching the Nuxt build manifest. The manifest returned HTTP 200, and that scenario then passed three unchanged repetitions; the transient failure was not reproduced. All 18 new executions passed, covering preferences, saved searches, cross-tab synchronization, storage failures, reduced motion, mobile accessibility, and global error recovery with draft preservation. Build/type checks, domain tests, HTTP/SSR checks, and the control audit also passed. The new mobile screens were visually inspected, and error recovery was also checked on the development server at port 5190.
+Validation on November 2, 2026 covered **76 scenarios across Chromium, Firefox, and WebKit**: 226 passing executions and two clipboard skips outside Chromium. All 24 new executions passed, covering simulated session entry/recovery, direct route gating, safe return destinations, selective local-data cleanup, cancellation, storage errors, organization isolation, mobile accessibility, and responsive brand sources. Build/type checks, domain tests, HTTP/SSR checks, and the control audit also passed. The session and preference screens and optimized brand were visually inspected at 390 and 1440 px. The local development server uses port 5190.
 
 Checks include organization/request isolation, draft recovery after reset, stale-write rejection, idempotent events, shortcuts, evidence, publication/withdrawal, continuous rotation during revalidation, offline expiration, reduced motion, and pre-hydration edits. Axe covers the new surfaces at 390 and 1280 px, plus existing journeys at 390 and 1440 px. These checks do not replace a comprehensive accessibility audit or physical-device testing.
 
@@ -211,7 +241,7 @@ The hero combines a paper-colored background, large typography, and an interacti
 
 ## Mavis adoption
 
-See the [Mavis and Jolt adoption inventory and remaining gaps](docs/mavis-adoption.md). `npm run audit:ui` counts component usage and checks that native HTML controls are not introduced outside explicit adapters. This revision contains **27 Mavis component types and 665 static occurrences, with no custom native HTML controls**. AppDateInput adapts strings and drafts to Mavis date components; NativeDateInput was removed. These counts are not a percentage of application code. Lume's tagline is “Gentileza gera gentileza”.
+See the [Mavis and Jolt adoption inventory and remaining gaps](docs/mavis-adoption.md). `npm run audit:ui` counts component usage and checks that native HTML controls are not introduced outside explicit adapters. This revision contains **27 Mavis component types and 700 static occurrences, with no custom native HTML controls**. AppDateInput adapts strings and drafts to Mavis date components; NativeDateInput was removed. These counts are not a percentage of application code. Lume's tagline is “Gentileza gera gentileza”.
 
 ## Brand assets and link previews
 

@@ -112,6 +112,26 @@ export function createPreferencesStore() {
   function resetAppearance() {
     update({ textSize: "standard", contrast: "standard", motion: "system" });
   }
+  function clearLocal(kind: "searches" | "preferences") {
+    try {
+      if (!browser) throw new Error();
+      // Read the latest stored value to preserve the other category across tabs.
+      const raw = browser.localStorage.getItem(preferenceKey);
+      const current =
+        raw === null ? state.value : parsePreferences(JSON.parse(raw));
+      const next =
+        kind === "searches"
+          ? { ...current, searches: [] }
+          : { ...defaultPreferences(), searches: current.searches };
+      browser.localStorage.setItem(preferenceKey, JSON.stringify(next));
+      state.value = next;
+      message.value = "";
+    } catch {
+      throw new Error(
+        "Não foi possível limpar os dados deste navegador. Nenhuma exclusão foi confirmada. Tente novamente.",
+      );
+    }
+  }
   return {
     state: readonly(state),
     ready: readonly(ready),
@@ -123,6 +143,7 @@ export function createPreferencesStore() {
     saveSearch,
     removeSearch,
     resetAppearance,
+    clearLocal,
   };
 }
 export type PreferencesStore = ReturnType<typeof createPreferencesStore>;

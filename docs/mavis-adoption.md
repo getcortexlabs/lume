@@ -4,7 +4,7 @@ Reviewed on November 2, 2026. Mavis Web/Core **0.1.0-alpha.6** and Jolt **0.1.0-
 
 ## Current usage
 
-The audit reports **27 Mavis component types, 665 static occurrences, and no custom native HTML controls** across 89 Vue components. This count is not a percentage of code or visual authorship: extracting a reusable composition can reduce static occurrences while expanding component reuse.
+The audit reports **27 Mavis component types, 700 static occurrences, and no custom native HTML controls** across 95 Vue components. This count is not a percentage of code or visual authorship: extracting a reusable composition can reduce static occurrences while expanding component reuse.
 
 ## What alpha.6 replaced
 
@@ -65,6 +65,8 @@ useKindnessMotion applies viewportEnter to the two statement lines and scrollLin
 - Additional shared motion recipes and parameters could reduce repeated values. Entrance, exit, and press tokens already exist and should not be listed as missing.
 
 Button/Card links, public tokens, Reveal height animation, DatePicker text drafts, and calendar readiness have been removed from the gap list.
+
+The session and local-data flows compose MCard, MText, MButton, MRow/MColumn, and MSheet. Confirmation copy remains mounted during the closing animation. Session routing, draft cleanup, and responsive brand sources belong to Lume. The full icon font and the global `createMavis` component registration remain shared payload costs; optional registration and icon delivery could be evaluated upstream without changing the existing application contracts.
 
 ### Jolt Web
 

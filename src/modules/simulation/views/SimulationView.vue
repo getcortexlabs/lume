@@ -9,6 +9,7 @@ function testErrorPage() {
   });
 }
 import HttpTracePanel from "../components/HttpTracePanel.vue";
+import SessionSimulation from "../../session/components/SessionSimulation.vue";
 import {
   MColumn,
   MText,
@@ -87,6 +88,7 @@ const { state, latency, message, apply } = useSimulation();
         @click="testErrorPage"
       />
     </MColumn>
+    <SessionSimulation />
     <HttpTracePanel />
   </section>
 </template>

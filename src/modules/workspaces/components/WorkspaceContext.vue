@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { MRow, MText } from "@getcortexlabs/mavis-web";
+import { MButton, MRow, MText } from "@getcortexlabs/mavis-web";
+import { useSessionActions } from "../../session/composables/useSessionActions";
+const { leave } = useSessionActions();
 import { useWorkspace } from "../composables/useWorkspace";
 const { state } = useWorkspace();
 </script>
@@ -15,8 +17,12 @@ const { state } = useWorkspace();
       >Demonstração guiada</RouterLink
     ><RouterLink to="/organization/displays" class="text-link"
       >Telas e widget</RouterLink
-    ></MRow
-  >
+    ><MButton
+      text="Sair da demonstração"
+      variant="ghost"
+      size="sm"
+      @click="leave('signed-out')"
+  /></MRow>
 </template>
 <style scoped>
 .workspace-context {

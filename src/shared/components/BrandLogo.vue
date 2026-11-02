@@ -2,7 +2,14 @@
   <RouterLink to="/" class="brand" aria-label="Lume, início"
     ><span class="brand-image"
       ><img
-        src="/brand/lume-original.png"
+        src="/brand/lume-480.webp"
+        srcset="
+          /brand/lume-480.webp       480w,
+          /brand/lume-960.webp       960w,
+          /brand/lume-original.webp 1536w
+        "
+        sizes="150px"
+        decoding="async"
         alt="Lume"
         width="1536"
         height="1024" /></span

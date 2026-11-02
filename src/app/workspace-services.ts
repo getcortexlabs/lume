@@ -66,6 +66,12 @@ export function createWorkspaceServices(
       graphs.set(active.id, create(active));
       changed();
     },
+    localDraftCount: () => store(active.id)?.read().length ?? 0,
+    clearLocalDrafts() {
+      // Clearing saved drafts must not reset publications or the active organization.
+      store(active.id)?.write([]);
+      subscribers.get("cases")!.forEach((listener) => listener());
+    },
     subscribe(listener) {
       listeners.add(listener);
       return () => listeners.delete(listener);

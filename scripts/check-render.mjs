@@ -41,6 +41,9 @@ try {
     ["/guidance", "Você não precisa", 200],
     ["/network", "Seu espaço", 200],
     ["/preferences", "Mais conforto para navegar.", 200],
+    ["/sign-in", "Cuidar começa com você.", 200],
+    ["/session-expired", "Vamos retomar de onde parou.", 200],
+    ["/access-denied", "Este perfil não tem acesso.", 200],
     ["/cases/unknown", "Este aviso não está disponível.", 404],
     ["/unknown-route", "Esse caminho ainda não existe.", 404],
   ]) {
